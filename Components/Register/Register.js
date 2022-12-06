@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Register from './Components/Register/Register';
+import AppBar from '../General/AppBar';
+import Step1 from './Step1';
 
-export default function App () {
+export default function Register() {
   return (
     <View style={styles.container}>
-      <Register/>
+      <AppBar title="Register"/>
+      <Step1/>
     </View>
   );
 }
