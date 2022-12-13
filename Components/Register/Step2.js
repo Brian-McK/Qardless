@@ -35,9 +35,17 @@ export default function Step2(props) {
   );
 }
 
+const defaultMargin= 20;
+
+const defaultPadding = 20;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    padding: defaultPadding,
   },
+  textInput: {
+    marginBottom: defaultMargin
+  }
 });
