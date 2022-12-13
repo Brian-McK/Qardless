@@ -13,6 +13,7 @@ export default function Step1(props) {
   return (
     <View style={styles.container}>
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="First Name"
         value={firstName}
@@ -20,6 +21,7 @@ export default function Step1(props) {
       />
 
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="Surname"
         value={surname}
@@ -27,6 +29,7 @@ export default function Step1(props) {
       />
 
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="Email"
         value={email}
@@ -36,9 +39,18 @@ export default function Step1(props) {
   );
 }
 
+
+const defaultMargin= 20;
+
+const defaultPadding = 20;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    padding: defaultPadding,
   },
+  textInput: {
+    marginBottom: defaultMargin
+  }
 });

@@ -1,27 +1,47 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Text, Button } from "react-native-paper";
 import { useState } from "react";
 
-
-export default function Home({navigation}) {
-
+export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Register"
-        onPress={() => navigation.navigate('Register')}
-      />
+      <Text style={styles.displayHeading} variant="displaySmall">
+        Home
+      </Text>
+      <View style={styles.buttonGroup}>
         <Button
-        title="Go to Login"
-        onPress={() => navigation.navigate('Login')}
-      />
+          style={styles.button}
+          mode="contained"          
+          onPress={() => navigation.navigate("Register")}
+        >
+          Register
+        </Button>
+        <Button mode="contained" onPress={() => navigation.navigate("Login")}>
+          Login
+        </Button>
+      </View>
     </View>
   );
 }
+
+const defaultMargin= 20;
+
+const defaultPadding = 20;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    padding: defaultPadding,
   },
+  displayHeading: {
+    textAlign: "center",
+    marginBottom: defaultMargin,
+  },
+  buttonGroup: {
+    padding: defaultPadding,
+  },
+  button: {
+    marginBottom: defaultMargin
+  }
 });
