@@ -2,16 +2,15 @@ import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-paper";
 
-export default function Step2(props) {
+export default function Step2() {
   const [address1, setAddress1] = useState();
   const [address2, setAddress2] = useState();
   const [county, setCounty] = useState();
 
-  props.progressCallback(0.66);
-
   return (
     <View style={styles.container}>
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="Address 1"
         value={address1}
@@ -19,6 +18,7 @@ export default function Step2(props) {
       />
 
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="Address 2"
         value={address2}
@@ -26,6 +26,7 @@ export default function Step2(props) {
       />
 
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="Address 3"
         value={county}

@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
 
-export default function Step1(props) {
+export default function Step1() {
   const [firstName, setFirstName] = useState();
   const [surname, setSurname] = useState();
   const [email, setEmail] = useState();
 
-  props.progressCallback(0.33);
 
 
   return (

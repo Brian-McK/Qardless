@@ -7,8 +7,6 @@ export default function Step3(props) {
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
 
-  props.progressCallback(1);
-
   return (
     <View style={styles.container}>
       <TextInput

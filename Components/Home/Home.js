@@ -5,9 +5,6 @@ import { useState } from "react";
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.displayHeading} variant="displaySmall">
-        Home
-      </Text>
       <View style={styles.buttonGroup}>
         <Button
           style={styles.button}
