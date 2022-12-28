@@ -5,7 +5,6 @@ import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 
-
 export default function Register() {
   const [progressLevel, setProgressLevel] = useState(0);
 
@@ -18,13 +17,19 @@ export default function Register() {
       <Text style={styles.displayHeading} variant="displaySmall">
         Register
       </Text>
+
       <Step1 progressCallback={handleProgress} />
+
+      <Button mode="contained" onPress={() => navigation.navigate("Step2")}>
+        Next
+      </Button>
+
       <ProgressBar progress={progressLevel} color={MD3Colors.error50} />
     </View>
   );
 }
 
-const defaultMargin= 20;
+const defaultMargin = 20;
 
 const defaultPadding = 20;
 
@@ -39,6 +44,6 @@ const styles = StyleSheet.create({
     marginBottom: defaultMargin,
   },
   inputField: {
-    marginBottom: defaultMargin
-  }
+    marginBottom: defaultMargin,
+  },
 });
