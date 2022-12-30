@@ -6,9 +6,11 @@ import App from "./src/App";
 
 export default function Main() {
   return (
+    <Provider store={store}>
       <PaperProvider>
         <App />
       </PaperProvider>
+    </Provider>
   );
 }
 
