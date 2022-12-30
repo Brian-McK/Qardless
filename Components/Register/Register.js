@@ -16,6 +16,57 @@ export default function Register({ navigation }) {
 
   const { formStepNumber } = useSelector((state) => state.register);
 
+  let nextButtonNavigateTo;
+  let prevButtonNavigateTo;
+
+  if (formStepNumber == 1) {
+    nextButtonNavigateTo = (
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={() => navigation.navigate("Step2")}
+      >
+        Next
+      </Button>
+    );
+    prevButtonNavigateTo = null;
+  }
+
+  if (formStepNumber == 2) {
+    nextButtonNavigateTo = (
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={() => navigation.navigate("Step3")}
+      >
+        Next
+      </Button>
+    );
+    prevButtonNavigateTo = (
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={() => navigation.navigate("Step1")}
+      >
+        Prev
+      </Button>
+    );
+  }
+
+  if (formStepNumber == 3) {
+    nextButtonNavigateTo = null;
+
+    prevButtonNavigateTo = (
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={() => navigation.navigate("Step2")}
+      >
+        Prev
+      </Button>
+    );
+  }
+
   const getProgressLevel = (formStepNum) => {
     if (formStepNum == 1) {
       setProgressLevel(0.33);
@@ -52,21 +103,9 @@ export default function Register({ navigation }) {
         <Stack.Screen name="Step3" component={Step3} />
       </Stack.Navigator>
 
-      <Button
-        style={styles.button}
-        mode="contained"
-        onPress={() => navigation.navigate("Step2")}
-      >
-        Next
-      </Button>
+      {nextButtonNavigateTo}
 
-      <Button
-        style={styles.button}
-        mode="contained"
-        onPress={() => navigation.navigate("Step1")}
-      >
-        Prev
-      </Button>
+      {prevButtonNavigateTo}
 
       <ProgressBar progress={progressLevel} color={MD3Colors.error50} />
     </SafeAreaView>

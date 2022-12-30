@@ -1,20 +1,28 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import { currentStep } from "../../Redux/registerSlice";
 
 export default function Step3() {
   const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
 
-  useFocusEffect(() => {
-    console.log("Loaded 3");
- });
+  const dispatch = useDispatch();
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Loaded 3");
+      dispatch(currentStep(3));
+    }, [dispatch, currentStep])
+  );
 
   return (
     <View style={styles.container}>
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="Eircode"
         value={eircode}
@@ -22,6 +30,7 @@ export default function Step3() {
       />
 
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="Phone"
         value={phone}
@@ -29,6 +38,7 @@ export default function Step3() {
       />
 
       <TextInput
+        style={styles.textInput}
         mode="outlined"
         label="Password"
         value={password}
