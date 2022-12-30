@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-paper";
 
-export default function Step3(props) {
+export default function Step3() {
   const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
+
+  useFocusEffect(() => {
+    console.log("Loaded 3");
+ });
 
   return (
     <View style={styles.container}>

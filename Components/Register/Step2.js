@@ -1,11 +1,23 @@
-import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useState, useCallback } from "react";
+import { StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import { currentStep } from "../../Redux/registerSlice";
 
 export default function Step2() {
   const [address1, setAddress1] = useState();
   const [address2, setAddress2] = useState();
   const [county, setCounty] = useState();
+
+  const dispatch = useDispatch();
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Loaded 2");
+      dispatch(currentStep(2));
+    }, [dispatch, currentStep])
+  );
 
   return (
     <View style={styles.container}>

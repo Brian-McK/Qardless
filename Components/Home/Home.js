@@ -1,10 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import { Text, Button } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 
 export default function Home({ navigation }) {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.buttonGroup}>
         <Button
           style={styles.button}
@@ -17,7 +18,7 @@ export default function Home({ navigation }) {
           Login
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

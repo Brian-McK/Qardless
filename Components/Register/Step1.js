@@ -1,14 +1,23 @@
-import { useState, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useState, useLayoutEffect, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
-import { TextInput } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
+import { useSelector, useDispatch } from "react-redux";
+import { currentStep } from "../../Redux/registerSlice";
 
 export default function Step1() {
   const [firstName, setFirstName] = useState();
   const [surname, setSurname] = useState();
   const [email, setEmail] = useState();
 
+  const dispatch = useDispatch();
 
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Loaded 1");
+      dispatch(currentStep(1));
+    }, [dispatch, currentStep, 1])
+  );
 
   return (
     <View style={styles.container}>
@@ -39,8 +48,7 @@ export default function Step1() {
   );
 }
 
-
-const defaultMargin= 20;
+const defaultMargin = 20;
 
 const defaultPadding = 20;
 
@@ -51,6 +59,6 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   textInput: {
-    marginBottom: defaultMargin
-  }
+    marginBottom: defaultMargin,
+  },
 });

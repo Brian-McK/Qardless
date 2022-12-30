@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { increment, decrement } from "../../Redux/counterSlice";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text } from "react-native-paper";
+import { increment, decrement } from "../../Redux/counterSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Counter() {

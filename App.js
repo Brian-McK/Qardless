@@ -13,22 +13,23 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <Provider store={store}>
     <SafeAreaProvider>
       <NavigationContainer>
         <SafeAreaView style={styles.container}>
           <Stack.Navigator
-            initialRouteName={Counter}
+            initialRouteName={Home}
             screenOptions={{
               header: (props) => <CustomNavigationBar {...props} />,
             }}
           >
-            <Stack.Screen name="Counter" component={Counter} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Register" component={Register} />
           </Stack.Navigator>
         </SafeAreaView>
       </NavigationContainer>
     </SafeAreaProvider>
+    </Provider>
   );
 }
 
