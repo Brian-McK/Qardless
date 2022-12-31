@@ -1,9 +1,9 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { currentStep } from "../../Redux/registerSlice";
+import { currentStep, resetCurrentStep, getStep3FormData, resetStep3FormData } from "../../Redux/registerSlice";
 
 export default function Step3() {
   const [eircode, setEircode] = useState();
@@ -11,6 +11,31 @@ export default function Step3() {
   const [password, setPassword] = useState();
 
   const dispatch = useDispatch();
+
+  const isFocused = useIsFocused();
+
+  // capture the data when changing focus on stack - TODO - Create custom hook
+  useEffect(() => {
+    if (!isFocused) {
+      dispatch(
+        getStep3FormData({
+          eircode,
+          phone,
+          password,
+        })
+      );
+    }
+  }, [isFocused]);
+
+  const submitFormData = () => {
+    dispatch(
+      getStep3FormData({
+        eircode,
+        phone,
+        password,
+      })
+    );
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -48,7 +73,7 @@ export default function Step3() {
       <Button
         style={styles.button}
         mode="contained"
-        onPress={() => submitFormData}
+        onPress={() => submitFormData()}
       >
         Submit
       </Button>
