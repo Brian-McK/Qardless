@@ -3,7 +3,12 @@ import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { currentStep, resetCurrentStep, getStep3FormData, resetStep3FormData } from "../../Redux/registerSlice";
+import {
+  currentStep,
+  resetCurrentStep,
+  getStep3FormData,
+  resetStep3FormData,
+} from "../../Redux/registerSlice";
 
 export default function Step3() {
   const [eircode, setEircode] = useState();
@@ -35,7 +40,7 @@ export default function Step3() {
         password,
       })
     );
-  }
+  };
 
   useFocusEffect(
     useCallback(() => {
