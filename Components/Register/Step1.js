@@ -1,9 +1,9 @@
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { useState, useLayoutEffect, useEffect, useCallback } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { TextInput, Button } from "react-native-paper";
-import { useSelector, useDispatch } from "react-redux";
-import { currentStep, getStep1FormData } from "../../Redux/registerSlice";
+import { useState, useEffect, useCallback } from "react";
+import { StyleSheet, View } from "react-native";
+import { TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import { currentStep, getStep1FormData, resetCurrentStep } from "../../Redux/registerSlice";
 
 export default function Step1() {
   const [firstName, setFirstName] = useState();
@@ -14,7 +14,7 @@ export default function Step1() {
 
   const isFocused = useIsFocused();
 
-  // capture the data when changing focus on stack
+      // capture the data when changing focus on stack - TODO - Create custom hook
   useEffect(() => {
     if (!isFocused) {
       dispatch(
@@ -31,7 +31,7 @@ export default function Step1() {
     useCallback(() => {
       console.log("Loaded 1");
       dispatch(currentStep(1));
-    }, [dispatch, currentStep, 1])
+    }, [dispatch, currentStep])
   );
 
   return (

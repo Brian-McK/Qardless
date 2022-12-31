@@ -1,9 +1,14 @@
-import { useFocusEffect } from "@react-navigation/native";
-import { useState, useCallback } from "react";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { useState, useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { currentStep } from "../../Redux/registerSlice";
+import {
+  currentStep,
+  resetCurrentStep,
+  getStep2FormData,
+  resetStep2FormData,
+} from "../../Redux/registerSlice";
 
 export default function Step2() {
   const [address1, setAddress1] = useState();
@@ -11,6 +16,21 @@ export default function Step2() {
   const [county, setCounty] = useState();
 
   const dispatch = useDispatch();
+
+  const isFocused = useIsFocused();
+
+  // capture the data when changing focus on stack - TODO - Create custom hook
+  useEffect(() => {
+    if (!isFocused) {
+      dispatch(
+        getStep2FormData({
+          address1,
+          address2,
+          county,
+        })
+      );
+    }
+  }, [isFocused]);
 
   useFocusEffect(
     useCallback(() => {
@@ -48,7 +68,7 @@ export default function Step2() {
   );
 }
 
-const defaultMargin= 20;
+const defaultMargin = 20;
 
 const defaultPadding = 20;
 
@@ -59,6 +79,6 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   textInput: {
-    marginBottom: defaultMargin
-  }
+    marginBottom: defaultMargin,
+  },
 });
