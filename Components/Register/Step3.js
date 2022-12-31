@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { currentStep } from "../../Redux/registerSlice";
 
@@ -44,11 +44,19 @@ export default function Step3() {
         value={password}
         onChangeText={(password) => setPassword(password)}
       />
+
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={() => submitFormData}
+      >
+        Submit
+      </Button>
     </View>
   );
 }
 
-const defaultMargin= 20;
+const defaultMargin = 20;
 
 const defaultPadding = 20;
 
@@ -59,6 +67,6 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   textInput: {
-    marginBottom: defaultMargin
-  }
+    marginBottom: defaultMargin,
+  },
 });

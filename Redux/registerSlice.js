@@ -1,6 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = { formStepNumber: 0 }
+const initialState = { 
+  formStepNumber: 0,
+  step1FormData: {
+    firstName: null,
+    surname: null,
+    email: null
+  },
+  step2FormData: {
+    address1: null,
+    address2: null,
+    county: null
+  },
+  step3FormData: {
+    eircode: null,
+    phone: null,
+    password: null
+  },
+  isValidForm: false
+ }
 
 export const counterSlice = createSlice({
   name: 'register',
