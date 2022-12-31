@@ -17,21 +17,6 @@ export default function Step3() {
 
   const dispatch = useDispatch();
 
-  const isFocused = useIsFocused();
-
-  // capture the data when changing focus on stack - TODO - Create custom hook
-  useEffect(() => {
-    if (!isFocused) {
-      dispatch(
-        getStep3FormData({
-          eircode,
-          phone,
-          password,
-        })
-      );
-    }
-  }, [isFocused]);
-
   const submitFormData = () => {
     dispatch(
       getStep3FormData({
