@@ -1,9 +1,9 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useState, useLayoutEffect, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
-import { currentStep } from "../../Redux/registerSlice";
+import { currentStep, getStep1FormData } from "../../Redux/registerSlice";
 
 export default function Step1() {
   const [firstName, setFirstName] = useState();
@@ -11,6 +11,21 @@ export default function Step1() {
   const [email, setEmail] = useState();
 
   const dispatch = useDispatch();
+
+  const isFocused = useIsFocused();
+
+  // capture the data when changing focus on stack
+  useEffect(() => {
+    if (!isFocused) {
+      dispatch(
+        getStep1FormData({
+          firstName,
+          surname,
+          email,
+        })
+      );
+    }
+  }, [isFocused]);
 
   useFocusEffect(
     useCallback(() => {

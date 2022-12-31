@@ -31,10 +31,31 @@ export const counterSlice = createSlice({
     resetCurrentStep: (state, action) => {
       return initialState
     },
+    getStep1FormData: (state, action) => {
+      console.log(action)
+      state.step1FormData = action.payload;
+    },
+    resetStep1FormData: (state, action) => {
+      return initialState
+    },
+    getStep2FormData: (state, action) => {
+      console.log(action)
+      state.step1FormData = action.payload;
+    },
+    resetStep2FormData: (state, action) => {
+      return initialState
+    },
+    getStep3FormData: (state, action) => {
+      console.log(action)
+      state.step1FormData = action.payload;
+    },
+    resetStep3FormData: (state, action) => {
+      return initialState
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { currentStep } = counterSlice.actions
+export const { currentStep, resetCurrentStep, getStep1FormData, resetStep1FormData, getStep2FormData, resetStep2FormData, getStep3FormData, resetStep3FormData } = counterSlice.actions
 
 export default counterSlice.reducer
