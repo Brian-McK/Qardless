@@ -2,18 +2,23 @@ import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput, Button } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   currentStep,
   resetCurrentStep,
   getStep3FormData,
   resetStep3FormData,
+  mergeFormData,
 } from "../../Redux/registerSlice";
 
 export default function Step3() {
   const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
+
+  const { step1FormData, step2FormData, step3FormData } = useSelector(
+    (state) => state.register
+  );
 
   const dispatch = useDispatch();
 
@@ -25,6 +30,16 @@ export default function Step3() {
         password,
       })
     );
+
+    // can probably access ThunkAPI to merge these in the reducer later on - TODO
+    // need to use local storage to keep textfield content in memory - TODO
+    const merged = { ...step1FormData, ...step2FormData, ...step3FormData };
+
+    console.log(merged);
+
+    console.log("trigger me");
+
+    dispatch(mergeFormData(merged));
   };
 
   useFocusEffect(

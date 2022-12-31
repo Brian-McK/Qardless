@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialState = { 
   formStepNumber: 0,
@@ -17,6 +17,7 @@ const initialState = {
     phone: null,
     password: null
   },
+  fullFormData: null,
   isValidForm: false
  }
 
@@ -25,29 +26,30 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     currentStep: (state, action) => {
-      console.log(action)
       state.formStepNumber = action.payload;
     },
     resetCurrentStep: (state, action) => {
       return initialState
     },
     getStep1FormData: (state, action) => {
-      console.log(action)
       state.step1FormData = action.payload;
     },
     resetStep1FormData: (state, action) => {
       return initialState
     },
     getStep2FormData: (state, action) => {
-      console.log(action)
-      state.step1FormData = action.payload;
+      state.step2FormData = action.payload;
     },
     resetStep2FormData: (state, action) => {
       return initialState
     },
     getStep3FormData: (state, action) => {
-      console.log(action)
-      state.step1FormData = action.payload;
+      state.step3FormData = action.payload;
+    },
+    mergeFormData: (state, action) => {
+      console.log(action);
+      state.fullFormData = action.payload;
+      console.log(state.fullFormData);
     },
     resetStep3FormData: (state, action) => {
       return initialState
@@ -56,6 +58,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { currentStep, resetCurrentStep, getStep1FormData, resetStep1FormData, getStep2FormData, resetStep2FormData, getStep3FormData, resetStep3FormData } = counterSlice.actions
+export const { currentStep, resetCurrentStep, getStep1FormData, resetStep1FormData, getStep2FormData, resetStep2FormData, getStep3FormData, resetStep3FormData, mergeFormData } = counterSlice.actions
 
 export default counterSlice.reducer
