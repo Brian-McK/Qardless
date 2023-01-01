@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { Axios } from "axios";
 
-const API_URL = "https://api.publicapis.org/entries";
+const API_URL = "https://jsonplaceholder.typicode.com/posts";
 
 const initialState = {
   formStepNumber: 0,
@@ -22,18 +22,29 @@ const initialState = {
   },
   fullFormData: null,
   isLoading: false,
-  isValidForm: false,
+  user: {
+    FirstName: null,
+    LastName: null,
+    Email: null,
+    EmailVerified: true,
+    PasswordHash: null,
+    AddressCode: null,
+    AddressDetailed: null
+  },
+  isSuccessfullyRegistered: false
 };
 
-export const getCartItems = createAsyncThunk("cart/getCartItems", async () => {
-  try {
-    const resp = await axios(API_URL);
-    console.log(resp.data);
-    return resp.data;
-  } catch (error) {
-    
+export const registerUser = createAsyncThunk(
+  "register/registerUser",
+  async (userDetails) => {
+    try {
+      const response = await axios.post(API_URL, userDetails);
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
   }
-});
+);
 
 export const counterSlice = createSlice({
   name: "register",
@@ -60,32 +71,32 @@ export const counterSlice = createSlice({
     getStep3FormData: (state, action) => {
       state.step3FormData = action.payload;
     },
-    mergeFormData: (state, action) => {
-      console.log(action);
-      state.fullFormData = action.payload;
-      console.log(state.fullFormData);
-    },
     resetStep3FormData: (state, action) => {
       return initialState;
     },
-  },
-  extraReducers: {
-    [getCartItems.pending]: (state) => {
-      // loading state
-      state.isLoading = true;
-    },
-    [getCartItems.fulfilled]: (state, action) => {
-      // return resp.json if promise if fullfilled
-      console.log(action);
-      state.isLoading = false;
-    },
-    [getCartItems.rejected]: (state) => {
-      // rejected state
-      state.isLoading = false;
+    formDataToUserCreateDTO: (state, action) => {
+      state.user.FirstName = action.payload.firstName;
+      state.user.LastName = action.payload.surname;
+      state.user.Email = action.payload.email;
+      // email verfied and password hash need to be fixed - TODO
+      state.user.EmailVerified = true;
+      state.user.PasswordHash = action.payload.password;
+      state.user.AddressCode = action.payload.eircode;
+      const concatAddresses = `${action.payload.address1}, ${action.payload.address2}, ${action.payload.county}`;
+      state.user.AddressDetailed = concatAddresses;
+
+      console.log(state.user);
     },
   },
+  extraReducers(builder){
+    builder.addCase(registerUser.fulfilled, (state, action) => {
+      state.isSuccessfullyRegistered = true;
+    })
+  }
 });
 
+
+// Export like in this example: https://www.youtube.com/watch?v=93CR_yURoII - TODO
 // Action creators are generated for each case reducer function
 export const {
   currentStep,
@@ -96,7 +107,7 @@ export const {
   resetStep2FormData,
   getStep3FormData,
   resetStep3FormData,
-  mergeFormData
+  formDataToUserCreateDTO
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

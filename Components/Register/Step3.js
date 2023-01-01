@@ -8,8 +8,8 @@ import {
   resetCurrentStep,
   getStep3FormData,
   resetStep3FormData,
-  mergeFormData,
-  getCartItems
+  formDataToUserCreateDTO,
+  registerUser
 } from "../../Redux/registerSlice";
 
 export default function Step3() {
@@ -22,11 +22,6 @@ export default function Step3() {
   );
 
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getCartItems())
-  }, []);
-  
 
   const submitFormData = () => {
     dispatch(
@@ -39,9 +34,13 @@ export default function Step3() {
 
     // can probably access ThunkAPI to merge these in the reducer later on - TODO
     // need to use local storage to keep textfield content in memory - TODO
-    const merged = { ...step1FormData, ...step2FormData, ...step3FormData };
+    const formDataMerged = { ...step1FormData, ...step2FormData, ...step3FormData };
 
-    dispatch(mergeFormData(merged));
+    console.log("merged");
+    console.log(formDataMerged);
+
+    dispatch(formDataToUserCreateDTO(formDataMerged));
+
   };
 
   useFocusEffect(
