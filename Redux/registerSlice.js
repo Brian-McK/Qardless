@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { Axios } from "axios";
 
-const API_URL = "https://jsonplaceholder.typicode.com/posts";
+const API_URL = 'https://localhost:7135/api/enduser';
 
 const initialState = {
   formStepNumber: 0,
@@ -92,18 +92,16 @@ export const counterSlice = createSlice({
       .addCase(registerUser.pending, (state, action) => {
         state.isLoading = true;
         state.isSuccessfullyRegistered = false;
-        console.log(action);
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccessfullyRegistered = true;
-        console.log(action);
+        console.log(action.payload);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccessfullyRegistered = false;
         state.error = action.error.message;
-        console.log(action);
       });
   },
 });

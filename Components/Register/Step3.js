@@ -38,9 +38,9 @@ export default function Step3() {
 
     dispatch(formDataToUserCreateDTO(formDataMerged));
 
-    console.log(user);
-
     try {
+      console.log(user);
+      console.log("step3component" + user);
       dispatch(registerUser(user)).unwrap()
     } catch (error) {
       console.log('failed to register user', error);
