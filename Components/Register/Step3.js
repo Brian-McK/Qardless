@@ -17,7 +17,7 @@ export default function Step3() {
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
 
-  const { step1FormData, step2FormData, step3FormData } = useSelector(
+  const { step1FormData, step2FormData, step3FormData, user } = useSelector(
     (state) => state.register
   );
 
@@ -36,11 +36,17 @@ export default function Step3() {
     // need to use local storage to keep textfield content in memory - TODO
     const formDataMerged = { ...step1FormData, ...step2FormData, ...step3FormData };
 
-    console.log("merged");
-    console.log(formDataMerged);
-
     dispatch(formDataToUserCreateDTO(formDataMerged));
 
+    console.log(user);
+
+    try {
+      dispatch(registerUser(user)).unwrap()
+    } catch (error) {
+      console.log('failed to register user', error);
+    } finally {
+
+    }
   };
 
   useFocusEffect(

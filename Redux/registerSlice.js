@@ -20,7 +20,6 @@ const initialState = {
     phone: null,
     password: null,
   },
-  fullFormData: null,
   isLoading: false,
   user: {
     FirstName: null,
@@ -29,9 +28,10 @@ const initialState = {
     EmailVerified: true,
     PasswordHash: null,
     AddressCode: null,
-    AddressDetailed: null
+    AddressDetailed: null,
   },
-  isSuccessfullyRegistered: false
+  isSuccessfullyRegistered: false,
+  error: null
 };
 
 export const registerUser = createAsyncThunk(
@@ -84,17 +84,29 @@ export const counterSlice = createSlice({
       state.user.AddressCode = action.payload.eircode;
       const concatAddresses = `${action.payload.address1}, ${action.payload.address2}, ${action.payload.county}`;
       state.user.AddressDetailed = concatAddresses;
-
-      console.log(state.user);
     },
   },
-  extraReducers(builder){
-    builder.addCase(registerUser.fulfilled, (state, action) => {
-      state.isSuccessfullyRegistered = true;
-    })
-  }
+  extraReducers(builder) {
+    // listening for the promise status action types
+    builder
+      .addCase(registerUser.pending, (state, action) => {
+        state.isLoading = true;
+        state.isSuccessfullyRegistered = false;
+        console.log(action);
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccessfullyRegistered = true;
+        console.log(action);
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccessfullyRegistered = false;
+        state.error = action.error.message;
+        console.log(action);
+      });
+  },
 });
-
 
 // Export like in this example: https://www.youtube.com/watch?v=93CR_yURoII - TODO
 // Action creators are generated for each case reducer function
@@ -107,7 +119,7 @@ export const {
   resetStep2FormData,
   getStep3FormData,
   resetStep3FormData,
-  formDataToUserCreateDTO
+  formDataToUserCreateDTO,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
