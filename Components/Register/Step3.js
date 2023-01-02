@@ -46,17 +46,15 @@ export default function Step3() {
 
     // check for falsy values
     if (Object.keys(formDataMerged).every((k) => !formDataMerged[k])) {
-      console.log(formDataMerged);
       return;
     }
 
     dispatch(formDataToUserCreateDTO(formDataMerged));
 
-    try {
-      dispatch(registerUser(user)).unwrap();
-    } catch (error) {
-      console.log("failed to register user", error);
-    }
+    dispatch(registerUser(user)).unwrap()
+    .then((payload) => console.log('fulfilled', payload))
+    .catch((error) => console.error('rejected', error))
+
   };
 
   useFocusEffect(

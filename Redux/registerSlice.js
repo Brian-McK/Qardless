@@ -21,16 +21,7 @@ const initialState = {
     password: null,
   },
   isLoading: false,
-  user: {
-    FirstName: null,
-    LastName: null,
-    Email: null,
-    EmailVerified: true,
-    PasswordHash: null,
-    AddressCode: null,
-    AddressDetailed: null,
-    registered: false,
-  },
+  user: {},
   error: null,
 };
 
@@ -39,11 +30,9 @@ export const registerUser = createAsyncThunk(
   async (userDetails) => {
     try {
       const response = await axios.post(API_URL, userDetails);
-      console.log(response);
-      console.log(response.status);
       return response.data;
     } catch (err) {
-      console.log("here");
+      console.log(err)
     }
   }
 );
@@ -77,15 +66,18 @@ export const counterSlice = createSlice({
       return initialState;
     },
     formDataToUserCreateDTO: (state, action) => {
-      state.user.FirstName = action.payload.firstName;
-      state.user.LastName = action.payload.surname;
-      state.user.Email = action.payload.email;
-      // email verfied and password hash need to be fixed - TODO
-      state.user.EmailVerified = true;
-      state.user.PasswordHash = action.payload.password;
-      state.user.AddressCode = action.payload.eircode;
-      const concatAddresses = `${action.payload.address1}, ${action.payload.address2}, ${action.payload.county}`;
-      state.user.AddressDetailed = concatAddresses;
+      const user = {
+        FirstName: action.payload.firstName,
+        LastName: action.payload.surname,
+        Email: action.payload.email,
+        // email verfied and password hash need to be fixed - TODO
+        EmailVerified: true,
+        PasswordHash: action.payload.password,
+        AddressCode: action.payload.eircode,
+        AddressDetailed: `${action.payload.address1}, ${action.payload.address2}, ${action.payload.county}`,
+      }
+      state.user = user;
+      console.log(state.user);
     },
   },
   extraReducers(builder) {
@@ -96,7 +88,7 @@ export const counterSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
+        return action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;

@@ -25,7 +25,7 @@ export default function Step1() {
         })
       );
     }
-  }, [isFocused]);
+  }, [dispatch, isFocused]);
 
   useFocusEffect(
     useCallback(() => {
