@@ -1,7 +1,12 @@
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import {
+  TextInput,
+  Button,
+  ActivityIndicator,
+  MD2Colors,
+} from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentStep,
@@ -9,7 +14,7 @@ import {
   getStep3FormData,
   resetStep3FormData,
   formDataToUserCreateDTO,
-  registerUser
+  registerUser,
 } from "../../Redux/registerSlice";
 
 export default function Step3() {
@@ -17,9 +22,8 @@ export default function Step3() {
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
 
-  const { step1FormData, step2FormData, step3FormData, user } = useSelector(
-    (state) => state.register
-  );
+  const { step1FormData, step2FormData, step3FormData, user, isLoading } =
+    useSelector((state) => state.register);
 
   const dispatch = useDispatch();
 
@@ -34,18 +38,24 @@ export default function Step3() {
 
     // can probably access ThunkAPI to merge these in the reducer later on - TODO
     // need to use local storage to keep textfield content in memory - TODO
-    const formDataMerged = { ...step1FormData, ...step2FormData, ...step3FormData };
+    const formDataMerged = {
+      ...step1FormData,
+      ...step2FormData,
+      ...step3FormData,
+    };
+
+    // check for falsy values
+    if (Object.keys(formDataMerged).every((k) => !formDataMerged[k])) {
+      console.log(formDataMerged);
+      return;
+    }
 
     dispatch(formDataToUserCreateDTO(formDataMerged));
 
     try {
-      console.log(user);
-      console.log("step3component" + user);
-      dispatch(registerUser(user)).unwrap()
+      dispatch(registerUser(user)).unwrap();
     } catch (error) {
-      console.log('failed to register user', error);
-    } finally {
-
+      console.log("failed to register user", error);
     }
   };
 
@@ -65,7 +75,6 @@ export default function Step3() {
         value={eircode}
         onChangeText={(eircode) => setEircode(eircode)}
       />
-
       <TextInput
         style={styles.textInput}
         mode="outlined"
@@ -73,7 +82,6 @@ export default function Step3() {
         value={phone}
         onChangeText={(phone) => setPhone(phone)}
       />
-
       <TextInput
         style={styles.textInput}
         mode="outlined"
@@ -81,7 +89,6 @@ export default function Step3() {
         value={password}
         onChangeText={(password) => setPassword(password)}
       />
-
       <Button
         style={styles.button}
         mode="contained"
@@ -89,6 +96,17 @@ export default function Step3() {
       >
         Submit
       </Button>
+
+      <Text>{isLoading.toString()}</Text>
+
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.spinner}
+          animating={true}
+          color={MD2Colors.red800}
+          size={"large"}
+        />
+      )}
     </View>
   );
 }
@@ -105,5 +123,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     marginBottom: defaultMargin,
+  },
+  spinner: {
+    margin: defaultMargin,
   },
 });

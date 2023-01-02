@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { Axios } from "axios";
 
-const API_URL = 'https://localhost:7135/api/enduser';
+const API_URL = "https://e71f-64-43-50-2.eu.ngrok.io/api/enduser";
 
 const initialState = {
   formStepNumber: 0,
@@ -29,9 +29,9 @@ const initialState = {
     PasswordHash: null,
     AddressCode: null,
     AddressDetailed: null,
+    registered: false,
   },
-  isSuccessfullyRegistered: false,
-  error: null
+  error: null,
 };
 
 export const registerUser = createAsyncThunk(
@@ -39,9 +39,11 @@ export const registerUser = createAsyncThunk(
   async (userDetails) => {
     try {
       const response = await axios.post(API_URL, userDetails);
+      console.log(response);
+      console.log(response.status);
       return response.data;
-    } catch (error) {
-      return error.message;
+    } catch (err) {
+      console.log("here");
     }
   }
 );
@@ -91,17 +93,13 @@ export const counterSlice = createSlice({
     builder
       .addCase(registerUser.pending, (state, action) => {
         state.isLoading = true;
-        state.isSuccessfullyRegistered = false;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccessfullyRegistered = true;
-        console.log(action.payload);
+        state.user = action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.isSuccessfullyRegistered = false;
-        state.error = action.error.message;
       });
   },
 });
@@ -118,6 +116,7 @@ export const {
   getStep3FormData,
   resetStep3FormData,
   formDataToUserCreateDTO,
+  isLoading
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

@@ -84,12 +84,8 @@ export default function Register({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.displayHeading} variant="displaySmall">
+      <Text style={styles.displayHeading} variant="headlineMedium">
         Register
-      </Text>
-
-      <Text style={styles.displayHeading} variant="displaySmall">
-        {"Step num: " + formStepNumber}
       </Text>
 
       <Stack.Navigator
@@ -123,7 +119,7 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   displayHeading: {
-    textAlign: "center",
+    textAlign: "center"
   },
   inputField: {
     marginBottom: defaultMargin,
