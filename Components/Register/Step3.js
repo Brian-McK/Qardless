@@ -43,25 +43,28 @@ export default function Step3() {
     );
 
     const userRegisterPayload = {
-      FirstName: step1FormData.firstName,
-      LastName: step1FormData.surname,
-      Email: step1FormData.email,
+      firstName: step1FormData.firstName,
+      lastName: step1FormData.surname,
+      email: step1FormData.email,
       // email verfied and password hash need to be fixed - TODO
-      EmailVerified: true,
-      PasswordHash: step3FormData.password,
+      emailVerified: true,
+      passwordHash: step3FormData.password,
+      phoneMobile: step3FormData.phone,
       AddressCode: step3FormData.eircode,
       AddressDetailed: `${step2FormData.address1}, ${step2FormData.address2}, ${step2FormData.county}`,
     };
 
     console.log(userRegisterPayload);
 
-    // // check for falsy values
-    if (
-      Object.values(userRegisterPayload).every((k) => !userRegisterPayload[k])
-    ) {
-      console.log("empty fields somewhere");
-      return;
-    }
+    const isFalsy = Object.values(userRegisterPayload).some(value => {
+      if (!value) {
+        return true;
+      }
+      return false;
+    });
+    
+    console.log(isFalsy);
+    
 
     // dispatch(registerUser(user))
     //   .unwrap()
@@ -119,6 +122,8 @@ export default function Step3() {
           />
         )}
       </View>
+
+      
     </TouchableWithoutFeedback>
   );
 }
