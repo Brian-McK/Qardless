@@ -1,6 +1,13 @@
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useState, useEffect, useCallback } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard
+} from "react-native";
 import {
   TextInput,
   Button,
@@ -13,7 +20,6 @@ import {
   resetCurrentStep,
   getStep3FormData,
   resetStep3FormData,
-  formDataToUserCreateDTO,
   registerUser,
 } from "../../Redux/registerSlice";
 
@@ -36,25 +42,31 @@ export default function Step3() {
       })
     );
 
-    // can probably access ThunkAPI to merge these in the reducer later on - TODO
-    // need to use local storage to keep textfield content in memory - TODO
-    const formDataMerged = {
-      ...step1FormData,
-      ...step2FormData,
-      ...step3FormData,
+    const userRegisterPayload = {
+      FirstName: step1FormData.firstName,
+      LastName: step1FormData.surname,
+      Email: step1FormData.email,
+      // email verfied and password hash need to be fixed - TODO
+      EmailVerified: true,
+      PasswordHash: step3FormData.password,
+      AddressCode: step3FormData.eircode,
+      AddressDetailed: `${step2FormData.address1}, ${step2FormData.address2}, ${step2FormData.county}`,
     };
 
-    // check for falsy values
-    if (Object.keys(formDataMerged).every((k) => !formDataMerged[k])) {
+    console.log(userRegisterPayload);
+
+    // // check for falsy values
+    if (
+      Object.values(userRegisterPayload).every((k) => !userRegisterPayload[k])
+    ) {
+      console.log("empty fields somewhere");
       return;
     }
 
-    dispatch(formDataToUserCreateDTO(formDataMerged));
-
-    dispatch(registerUser(user)).unwrap()
-    .then((payload) => console.log('fulfilled', payload))
-    .catch((error) => console.error('rejected', error))
-
+    // dispatch(registerUser(user))
+    //   .unwrap()
+    //   .then((payload) => console.log("fulfilled", payload))
+    //   .catch((error) => console.error("rejected", error));
   };
 
   useFocusEffect(
@@ -65,47 +77,49 @@ export default function Step3() {
   );
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.textInput}
-        mode="outlined"
-        label="Eircode"
-        value={eircode}
-        onChangeText={(eircode) => setEircode(eircode)}
-      />
-      <TextInput
-        style={styles.textInput}
-        mode="outlined"
-        label="Phone"
-        value={phone}
-        onChangeText={(phone) => setPhone(phone)}
-      />
-      <TextInput
-        style={styles.textInput}
-        mode="outlined"
-        label="Password"
-        value={password}
-        onChangeText={(password) => setPassword(password)}
-      />
-      <Button
-        style={styles.button}
-        mode="contained"
-        onPress={() => submitFormData()}
-      >
-        Submit
-      </Button>
-
-      <Text>{isLoading.toString()}</Text>
-
-      {isLoading && (
-        <ActivityIndicator
-          style={styles.spinner}
-          animating={true}
-          color={MD2Colors.red800}
-          size={"large"}
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.textInput}
+          mode="outlined"
+          label="Eircode"
+          value={eircode}
+          onChangeText={(eircode) => setEircode(eircode)}
         />
-      )}
-    </View>
+        <TextInput
+          style={styles.textInput}
+          mode="outlined"
+          label="Phone"
+          value={phone}
+          onChangeText={(phone) => setPhone(phone)}
+        />
+        <TextInput
+          style={styles.textInput}
+          mode="outlined"
+          label="Password"
+          value={password}
+          onChangeText={(password) => setPassword(password)}
+        />
+        <Button
+          style={styles.button}
+          mode="contained"
+          onPress={() => submitFormData()}
+        >
+          Submit
+        </Button>
+
+        <Text>{isLoading.toString()}</Text>
+
+        {isLoading && (
+          <ActivityIndicator
+            style={styles.spinner}
+            animating={true}
+            color={MD2Colors.red800}
+            size={"large"}
+          />
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

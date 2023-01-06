@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ProgressBar, MD3Colors, Text, Button } from "react-native-paper";
@@ -83,28 +83,33 @@ export default function Register({ navigation }) {
   }, [formStepNumber]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.displayHeading} variant="headlineMedium">
-        Register
-      </Text>
+    <TouchableWithoutFeedback
+      onPress={() => Keyboard.dismiss()}
+      accessible={false}
+    >
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.displayHeading} variant="headlineMedium">
+          Register
+        </Text>
 
-      <Stack.Navigator
-        initialRouteName={Step1}
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Step1" component={Step1} />
-        <Stack.Screen name="Step2" component={Step2} />
-        <Stack.Screen name="Step3" component={Step3} />
-      </Stack.Navigator>
+        <Stack.Navigator
+          initialRouteName={Step1}
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Step1" component={Step1} />
+          <Stack.Screen name="Step2" component={Step2} />
+          <Stack.Screen name="Step3" component={Step3} />
+        </Stack.Navigator>
 
-      {nextButtonNavigateTo}
+        {nextButtonNavigateTo}
 
-      {prevButtonNavigateTo}
+        {prevButtonNavigateTo}
 
-      <ProgressBar progress={progressLevel} color={MD3Colors.error50} />
-    </SafeAreaView>
+        <ProgressBar progress={progressLevel} color={MD3Colors.error50} />
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -119,7 +124,7 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   displayHeading: {
-    textAlign: "center"
+    textAlign: "center",
   },
   inputField: {
     marginBottom: defaultMargin,

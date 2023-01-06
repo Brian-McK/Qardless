@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { Axios } from "axios";
 
-const API_URL = "https://e71f-64-43-50-2.eu.ngrok.io/api/enduser";
+const API_URL = "https://0c96-64-43-50-21.eu.ngrok.io/api/enduser";
 
 const initialState = {
   formStepNumber: 0,
@@ -21,18 +21,19 @@ const initialState = {
     password: null,
   },
   isLoading: false,
-  user: {},
+  userToRegister: {},
+  registeredUsers: [],
   error: null,
 };
 
 export const registerUser = createAsyncThunk(
   "register/registerUser",
-  async (userDetails) => {
+  async (payload) => {
     try {
-      const response = await axios.post(API_URL, userDetails);
+      const response = await axios.post(API_URL, payload);
       return response.data;
     } catch (err) {
-      console.log(err)
+      console.log(err.message)
     }
   }
 );
@@ -64,21 +65,7 @@ export const counterSlice = createSlice({
     },
     resetStep3FormData: (state, action) => {
       return initialState;
-    },
-    formDataToUserCreateDTO: (state, action) => {
-      const user = {
-        FirstName: action.payload.firstName,
-        LastName: action.payload.surname,
-        Email: action.payload.email,
-        // email verfied and password hash need to be fixed - TODO
-        EmailVerified: true,
-        PasswordHash: action.payload.password,
-        AddressCode: action.payload.eircode,
-        AddressDetailed: `${action.payload.address1}, ${action.payload.address2}, ${action.payload.county}`,
-      }
-      state.user = user;
-      console.log(state.user);
-    },
+    }
   },
   extraReducers(builder) {
     // listening for the promise status action types
@@ -88,7 +75,7 @@ export const counterSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        return action.payload;
+        state.registeredUsers.unshift(action.payload);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -107,7 +94,6 @@ export const {
   resetStep2FormData,
   getStep3FormData,
   resetStep3FormData,
-  formDataToUserCreateDTO,
   isLoading
 } = counterSlice.actions;
 
