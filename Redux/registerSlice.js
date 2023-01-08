@@ -26,14 +26,31 @@ const initialState = {
   error: null,
 };
 
+// export const registerUser = createAsyncThunk(
+//   "register/registerUser",
+//   async (payload) => {
+//     try {
+//       const response = await axios.post(API_URL, payload);
+//       return response.data;
+//     } catch (err) {
+//       console.log(err.message)
+//     }
+//   }
+// );
+
 export const registerUser = createAsyncThunk(
   "register/registerUser",
   async (payload) => {
     try {
-      const response = await axios.post(API_URL, payload);
-      return response.data;
+      const response = await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      return data;
     } catch (err) {
-      console.log(err.message)
+      // You can choose to use the message attached to err or write a custom error
+      return rejectWithValue("Opps there seems to be an error");
     }
   }
 );
@@ -65,20 +82,27 @@ export const counterSlice = createSlice({
     },
     resetStep3FormData: (state, action) => {
       return initialState;
-    }
+    },
   },
   extraReducers(builder) {
     // listening for the promise status action types
     builder
       .addCase(registerUser.pending, (state, action) => {
         state.isLoading = true;
+        state.error = false;
+        console.log("pending...")
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.error = false;
         state.registeredUsers.unshift(action.payload);
+        console.log("fulfilled...")
+        
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = true;
+        console.log("rejected...")
       });
   },
 });
@@ -94,7 +118,7 @@ export const {
   resetStep2FormData,
   getStep3FormData,
   resetStep3FormData,
-  isLoading
+  isLoading,
 } = counterSlice.actions;
 
 export default counterSlice.reducer;

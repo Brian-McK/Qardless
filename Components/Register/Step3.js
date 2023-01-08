@@ -6,7 +6,7 @@ import {
   Text,
   View,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
 } from "react-native";
 import {
   TextInput,
@@ -22,18 +22,24 @@ import {
   resetStep3FormData,
   registerUser,
 } from "../../Redux/registerSlice";
+import { useGetUsersQuery } from "../../Redux/api/apiSlice";
 
 export default function Step3() {
   const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
 
-  const { step1FormData, step2FormData, step3FormData, user, isLoading } =
-    useSelector((state) => state.register);
+  const { data, isLoading, isFetching, isSuccess, isError, error } = useGetUsersQuery();
+
+  console.log('!!', data, isError, isFetching, isLoading, error)
+
+  const { step1FormData, step2FormData, step3FormData, user } = useSelector(
+    (state) => state.register
+  );
 
   const dispatch = useDispatch();
 
-  const submitFormData = () => {
+  const submitFormData = async () => {
     dispatch(
       getStep3FormData({
         eircode,
@@ -54,17 +60,21 @@ export default function Step3() {
       AddressDetailed: `${step2FormData.address1}, ${step2FormData.address2}, ${step2FormData.county}`,
     };
 
+    console.log("payload: ");
     console.log(userRegisterPayload);
 
-    const isFalsy = Object.values(userRegisterPayload).some(value => {
+    const isFalsy = Object.values(userRegisterPayload).some((value) => {
       if (!value) {
         return true;
       }
       return false;
     });
-    
-    console.log(isFalsy);
-    
+
+    if (isFalsy) {
+      return;
+    }
+
+   
 
     // dispatch(registerUser(user))
     //   .unwrap()
@@ -80,7 +90,10 @@ export default function Step3() {
   );
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
+    <TouchableWithoutFeedback
+      onPress={() => Keyboard.dismiss()}
+      accessible={false}
+    >
       <View style={styles.container}>
         <TextInput
           style={styles.textInput}
@@ -112,18 +125,7 @@ export default function Step3() {
         </Button>
 
         <Text>{isLoading.toString()}</Text>
-
-        {isLoading && (
-          <ActivityIndicator
-            style={styles.spinner}
-            animating={true}
-            color={MD2Colors.red800}
-            size={"large"}
-          />
-        )}
       </View>
-
-      
     </TouchableWithoutFeedback>
   );
 }
