@@ -17,25 +17,31 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentStep,
-  resetCurrentStep,
   getStep3FormData,
-  resetStep3FormData,
-  registerUser,
+  // registerUser,
 } from "../../Redux/registerSlice";
-import { useGetUsersQuery } from "../../Redux/api/apiSlice";
+import {
+  useGetUsersQuery,
+  useRegisterUserMutation,
+} from "../../Redux/api/usersApiSlice";
 
 export default function Step3() {
   const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
-
-  const { data, isLoading, isFetching, isSuccess, isError, error } = useGetUsersQuery();
-
-  console.log('!!', data, isError, isFetching, isLoading, error)
+  const { data = [] } = useGetUsersQuery();
+  const [registerUser] = useRegisterUserMutation();
 
   const { step1FormData, step2FormData, step3FormData, user } = useSelector(
     (state) => state.register
   );
+
+  const registerEndUser = (user) => {
+    console.log("registerEndUser: ");
+    console.log(user);
+
+    registerUser(user);
+  };
 
   const dispatch = useDispatch();
 
@@ -60,9 +66,6 @@ export default function Step3() {
       AddressDetailed: `${step2FormData.address1}, ${step2FormData.address2}, ${step2FormData.county}`,
     };
 
-    console.log("payload: ");
-    console.log(userRegisterPayload);
-
     const isFalsy = Object.values(userRegisterPayload).some((value) => {
       if (!value) {
         return true;
@@ -74,12 +77,7 @@ export default function Step3() {
       return;
     }
 
-   
-
-    // dispatch(registerUser(user))
-    //   .unwrap()
-    //   .then((payload) => console.log("fulfilled", payload))
-    //   .catch((error) => console.error("rejected", error));
+    registerEndUser(userRegisterPayload);
   };
 
   useFocusEffect(
@@ -123,8 +121,6 @@ export default function Step3() {
         >
           Submit
         </Button>
-
-        <Text>{isLoading.toString()}</Text>
       </View>
     </TouchableWithoutFeedback>
   );
