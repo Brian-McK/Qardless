@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { Axios } from "axios";
 
-const API_URL = "https://0c96-64-43-50-21.eu.ngrok.io/api/enduser";
+const API_URL = "https://edc6-64-43-50-36.eu.ngrok.io/api/enduser";
 
 const initialState = {
   formStepNumber: 0,
