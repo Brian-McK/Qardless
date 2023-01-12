@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   currentStep,
   getStep3FormData,
+  isLoading,
   // registerUser,
 } from "../../Redux/registerSlice";
 import {
@@ -30,7 +31,8 @@ export default function Step3() {
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const { data = [] } = useGetUsersQuery();
-  const [registerUser] = useRegisterUserMutation();
+  const [registerUser, { isLoading, isError, isSuccess, isUninitialized, error }] =
+    useRegisterUserMutation();
 
   const { step1FormData, step2FormData, step3FormData, user } = useSelector(
     (state) => state.register
@@ -78,7 +80,15 @@ export default function Step3() {
     }
 
     registerEndUser(userRegisterPayload);
+
+    console.log('!!', isLoading, isError, isSuccess, isUninitialized, error)
   };
+
+  // let success;
+
+  // if(isSuccess){
+  //   success = 
+  // }
 
   useFocusEffect(
     useCallback(() => {
@@ -116,11 +126,14 @@ export default function Step3() {
         />
         <Button
           style={styles.button}
+          loading={isLoading}
           mode="contained"
           onPress={() => submitFormData()}
         >
           Submit
         </Button>
+
+        <Text>{isSuccess}</Text>
       </View>
     </TouchableWithoutFeedback>
   );
