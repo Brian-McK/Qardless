@@ -56,7 +56,7 @@ export default function Login({ navigation }) {
 
     console.log("!!", isLoading, isError, isSuccess, isUninitialized, error);
 
-    navigation.navigate("Dashboard");
+    navigation.navigate("DashboardHome");
   };
 
   useEffect(() => {
