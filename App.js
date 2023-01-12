@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import Register from "./Components/Register/Register";
+import Login from "./Components/Login/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./Components/Home/Home";
@@ -24,6 +25,7 @@ export default function App() {
             >
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="Login" component={Login} />
             </Stack.Navigator>
           </SafeAreaView>
         </NavigationContainer>
