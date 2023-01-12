@@ -15,10 +15,24 @@ import {
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  useLoginUserMutation,
+} from "../../Redux/api/usersApiSlice";
 
 export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [
+    loginUser,
+    { isLoading, isError, isSuccess, isUninitialized, error },
+  ] = useLoginUserMutation();
+
+  const loginEndUser = (loginDetails) => {
+    console.log("loginEndUser: ");
+    console.log(loginDetails);
+
+    loginUser(loginDetails);
+  };
 
   const submitFormData = async () => {
     const userLoginPayload = {
@@ -39,7 +53,7 @@ export default function Login() {
       return;
     }
 
-    registerEndUser(userRegisterPayload);
+    loginEndUser(userRegisterPayload);
 
     console.log("!!", isLoading, isError, isSuccess, isUninitialized, error);
   };
