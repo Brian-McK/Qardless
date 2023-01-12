@@ -8,12 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import {
-  TextInput,
-  Button,
-  ActivityIndicator,
-  MD2Colors,
-} from "react-native-paper";
+import { TextInput, Button, Snackbar, MD2Colors } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentStep,
@@ -22,17 +17,18 @@ import {
   // registerUser,
 } from "../../Redux/registerSlice";
 import {
-  useGetUsersQuery,
   useRegisterUserMutation,
 } from "../../Redux/api/usersApiSlice";
 
-export default function Step3() {
+export default function Step3({ navigation }) {
   const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
-  const { data = [] } = useGetUsersQuery();
-  const [registerUser, { isLoading, isError, isSuccess, isUninitialized, error }] =
-    useRegisterUserMutation();
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [
+    registerUser,
+    { isLoading, isError, isSuccess, isUninitialized, error },
+  ] = useRegisterUserMutation();
 
   const { step1FormData, step2FormData, step3FormData, user } = useSelector(
     (state) => state.register
@@ -81,14 +77,29 @@ export default function Step3() {
 
     registerEndUser(userRegisterPayload);
 
-    console.log('!!', isLoading, isError, isSuccess, isUninitialized, error)
+    console.log("!!", isLoading, isError, isSuccess, isUninitialized, error);
   };
 
-  // let success;
+  const onDismissSnackBar = () => setSnackbarVisible(false);
 
-  // if(isSuccess){
-  //   success = 
-  // }
+  let snackbar;
+
+  if (isSuccess) {
+    snackbar = (
+      <Snackbar
+        visible={true}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: "Login",
+          onPress: () => {
+            navigation.navigate("Home");
+          },
+        }}
+      >
+        Successfully registered. Go to Login!
+      </Snackbar>
+    );
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -127,11 +138,14 @@ export default function Step3() {
         <Button
           style={styles.button}
           loading={isLoading}
+          disabled={isLoading}
           mode="contained"
           onPress={() => submitFormData()}
         >
           Submit
         </Button>
+
+        {snackbar}
 
         <Text>{isSuccess}</Text>
       </View>
