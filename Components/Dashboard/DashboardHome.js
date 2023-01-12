@@ -15,6 +15,7 @@ import {
   } from "react-native-paper";
   import { SafeAreaView } from "react-native-safe-area-context";
   import { useSelector, useDispatch } from "react-redux";
+  import SideNav from "../SideMenu/SideNav";
   
   export default function DashboardHome({ navigation }) {
   
@@ -31,6 +32,7 @@ import {
           <Text style={styles.displayHeading} variant="headlineMedium">
             Dashboard Home
           </Text>
+          <SideNav/>
         </SafeAreaView>
       </TouchableWithoutFeedback>
     );
