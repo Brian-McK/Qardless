@@ -12,6 +12,13 @@ export const usersApiSlice = createApi({
       query: () => `enduser`,
       providesTags: ['Enduser']
     }),
+    loginUser: builder.query({
+      query: (body) => ({
+        url: "enduser",
+        method: "POST",
+        body,
+      }), 
+    }),
     registerUser: builder.mutation({
       query: (body) => ({
         url: "enduser",
