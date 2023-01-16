@@ -9,6 +9,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import store from "./Redux/store";
 import { Provider } from "react-redux";
 import DashboardHome from "./Components/Dashboard/DashboardHome";
+import 'react-native-gesture-handler';
 
 const Stack = createNativeStackNavigator();
 
