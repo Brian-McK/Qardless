@@ -18,19 +18,26 @@ export default function SideNav({ navigation }) {
     console.log("Dashboard screen loaded");
   }, []);
 
+  const drawerItems = navItems.map((item, index) => {
+    return (
+      <Drawer.Item
+        style={styles.drawerItems}
+        key={index}
+        icon={item.iconName}
+        label={item.name}
+        active={active === item.name}
+        onPress={() => {
+          setActive(item.name);
+          navigation.navigate(item.name);
+        }}
+      />
+    );
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       <Drawer.Section title="Menu" showDivider={true}>
-        {navItems.map((item) => (
-          <Drawer.Item
-            style={styles.drawerItems}
-            key={item.name}
-            icon={item.iconName}
-            label={item.name}
-            active={active === item.name}
-            onPress={() => setActive(item.name)}
-          />
-        ))}
+        {drawerItems}
       </Drawer.Section>
     </SafeAreaView>
   );
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
     width: "75%",
   },
   drawerItems: {
-    color: "red",
+    textDecorationColor: "red",
   },
   displayHeading: {
     textAlign: "center",
