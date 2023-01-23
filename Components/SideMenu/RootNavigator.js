@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Certificates from "../Dashboard/Certificates";
+import Certificates from "../Dashboard/Certificates/Certificates";
 import DrawerContent from "./DrawerContent";
 import QRScanner from "../Dashboard/QRScanner";
 import DashboardOverview from "../Dashboard/DashboardOverview";
