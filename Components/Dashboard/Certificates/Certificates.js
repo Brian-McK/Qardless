@@ -1,7 +1,12 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { List, MD2Colors, MD3Colors, TouchableRipple } from "react-native-paper";
+import {
+  List,
+  MD2Colors,
+  MD3Colors,
+  TouchableRipple,
+} from "react-native-paper";
 
 export default function Certificates() {
   const dummyCertItems = [
@@ -231,7 +236,11 @@ export default function Certificates() {
           title={item.Title}
           description="Item description"
           left={(props) => <List.Icon {...props} icon="clipboard-list" />}
-          right={(props) => <List.Icon {...props} icon="eye" />}
+          right={(props) => (
+            <TouchableOpacity onPress={() => {}}>
+              <List.Icon {...props} icon="eye" color={MD2Colors.purple500} />
+            </TouchableOpacity>
+          )}
         />
       </TouchableRipple>
     );
