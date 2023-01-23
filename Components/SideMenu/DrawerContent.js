@@ -39,7 +39,7 @@ export default function DrawerContent(props) {
           />
         )}
         label={item.name}
-        onPress={() => {}}
+        onPress={() => props.navigation.navigate(item.name)}
       />
     );
   });
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   logoutSection: {},
   switch: {
     position: "absolute",
-    marginLeft: "60%"
+    marginLeft: "60%",
   },
   userInfoSection: {
     paddingLeft: 20,

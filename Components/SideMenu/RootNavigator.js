@@ -6,9 +6,9 @@ import DrawerContent from "./DrawerContent";
 
 const Drawer = createDrawerNavigator();
 
-export default function RootNavigator() {
+export default function RootNavigator({ navigation }) {
   return (
-    <Drawer.Navigator drawerContent={() => <DrawerContent />}>
+    <Drawer.Navigator drawerContent={() => <DrawerContent navigation={navigation} />}>
       <Drawer.Screen name="Certificates" component={Certificates} />
       <Drawer.Screen name="QR Scanner" component={Certificates} />
     </Drawer.Navigator>
