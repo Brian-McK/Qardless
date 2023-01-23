@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
-export default function Certificates() {
+export default function DashboardOverview() {
   return (
     <View style={styles.container}>
-      <Text>Certificates Screen</Text>
+      <Text>Dashboard Overview Screen</Text>
     </View>
   );
 }
