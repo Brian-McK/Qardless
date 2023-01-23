@@ -10,6 +10,7 @@ export default function RootNavigator() {
   return (
     <Drawer.Navigator drawerContent={() => <DrawerContent />}>
       <Drawer.Screen name="Certificates" component={Certificates} />
+      <Drawer.Screen name="QR Scanner" component={Certificates} />
     </Drawer.Navigator>
   );
 }

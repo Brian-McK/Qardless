@@ -35,21 +35,9 @@ export default function DashboardHome({ navigation }) {
   );
 }
 
-const defaultMargin = 20;
-
-const defaultPadding = 20;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: defaultPadding,
-  },
-  displayHeading: {
-    textAlign: "center",
-    marginBottom: defaultMargin,
-  },
-  button: {
-    marginBottom: defaultMargin,
   },
 });

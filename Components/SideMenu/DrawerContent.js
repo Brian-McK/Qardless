@@ -56,14 +56,31 @@ export default function DrawerContent(props) {
           {drawerItems}
         </Drawer.Section>
         <Drawer.Section>
-          <TouchableRipple onPress={() => {}}>
-            <View style={styles.preference}>
-              <Text>Dark Mode</Text>
-              <View pointerEvents="none">
-                <Switch value={false} />
-              </View>
-            </View>
-          </TouchableRipple>
+          <View>
+            <DrawerItem
+              icon={({ color, size }) => (
+                <MaterialCommunityIcons
+                  name="theme-light-dark"
+                  color={color}
+                  size={size}
+                />
+              )}
+              label="Dark Mode"
+              onPress={() => {}}
+            />
+          </View>
+          <View style={styles.switch}>
+            <Switch value={false} />
+          </View>
+        </Drawer.Section>
+        <Drawer.Section style={styles.logoutSection}>
+          <DrawerItem
+            icon={({ color, size }) => (
+              <MaterialCommunityIcons name="logout" color={color} size={size} />
+            )}
+            label="Logout"
+            onPress={() => {}}
+          />
         </Drawer.Section>
       </View>
     </DrawerContentScrollView>
@@ -73,6 +90,11 @@ export default function DrawerContent(props) {
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
+  },
+  logoutSection: {},
+  switch: {
+    position: "absolute",
+    marginLeft: "60%"
   },
   userInfoSection: {
     paddingLeft: 20,
