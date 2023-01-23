@@ -8,7 +8,7 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 
-export default function Certificates() {
+export default function Certificates({ navigation }) {
   const dummyCertItems = [
     {
       Id: "12345",
@@ -234,7 +234,7 @@ export default function Certificates() {
         <List.Item
           key={index}
           title={item.Title}
-          description="Item description"
+          description={`Awarded: ${item.CreatedDate} Ends: ${item.ExpiryDate}`}
           left={(props) => <List.Icon {...props} icon="clipboard-list" />}
           right={(props) => (
             <TouchableOpacity onPress={() => {}}>
