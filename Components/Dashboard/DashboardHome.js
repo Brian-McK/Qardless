@@ -15,7 +15,6 @@ import {
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
-import SideNav from "../SideMenu/SideNav";
 import RootNavigator from "../SideMenu/RootNavigator";
 
 export default function DashboardHome({ navigation }) {
