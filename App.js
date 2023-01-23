@@ -8,6 +8,8 @@ import CustomNavigationBar from "./Components/General/CustomNavigationBar";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import store from "./Redux/store";
 import { Provider } from "react-redux";
+import DashboardHome from "./Components/Dashboard/DashboardHome";
+import "react-native-gesture-handler";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +28,7 @@ export default function App() {
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="Register" component={Register} />
               <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="DashboardHome" component={DashboardHome} />
             </Stack.Navigator>
           </SafeAreaView>
         </NavigationContainer>

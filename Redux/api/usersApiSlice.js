@@ -4,20 +4,21 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const usersApiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://f65a-64-43-50-159.eu.ngrok.io/api",
+    baseUrl: "https://9e3d-64-43-50-159.eu.ngrok.io/api",
   }),
-  tagTypes: ['Enduser'],
+  tagTypes: ["Enduser"],
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => `enduser`,
-      providesTags: ['Enduser']
+      providesTags: ["Enduser"],
     }),
-    loginUser: builder.query({
+    loginUser: builder.mutation({
       query: (body) => ({
         url: "enduser",
         method: "POST",
         body,
-      }), 
+      }),
+      invalidatesTags: ["Enduser"],
     }),
     registerUser: builder.mutation({
       query: (body) => ({
@@ -25,9 +26,13 @@ export const usersApiSlice = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ['Enduser']
+      invalidatesTags: ["Enduser"],
     }),
   }),
 });
 
-export const { useGetUsersQuery, useRegisterUserMutation } = usersApiSlice;
+export const {
+  useGetUsersQuery,
+  useRegisterUserMutation,
+  useLoginUserMutation,
+} = usersApiSlice;

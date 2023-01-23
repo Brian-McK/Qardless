@@ -15,10 +15,21 @@ import {
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
+import { useLoginUserMutation } from "../../Redux/api/usersApiSlice";
 
-export default function Login() {
+export default function Login({ navigation }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loginUser, { isLoading, isError, isSuccess, isUninitialized, error }] =
+    useLoginUserMutation();
+
+  // commented out to replicate going to the menu screen - TODO
+  // const loginEndUser = (loginDetails) => {
+  //   console.log("loginEndUser: ");
+  //   console.log(loginDetails);
+
+  //   loginUser(loginDetails);
+  // };
 
   const submitFormData = async () => {
     const userLoginPayload = {
@@ -28,20 +39,24 @@ export default function Login() {
       passwordHash: password,
     };
 
-    const isFalsy = Object.values(userLoginPayload).some((value) => {
-      if (!value) {
-        return true;
-      }
-      return false;
-    });
+    // commented out to replicate going to the menu screen - TODO
+    // const isFalsy = Object.values(userLoginPayload).some((value) => {
+    //   if (!value) {
+    //     return true;
+    //   }
+    //   return false;
+    // });
 
-    if (isFalsy) {
-      return;
-    }
+    // if (isFalsy) {
+    //   return;
+    // }
 
-    registerEndUser(userRegisterPayload);
+    // commented out to replicate going to the menu screen - TODO
+    // loginEndUser(userRegisterPayload);
 
     console.log("!!", isLoading, isError, isSuccess, isUninitialized, error);
+
+    navigation.navigate("DashboardHome");
   };
 
   useEffect(() => {
