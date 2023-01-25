@@ -8,18 +8,19 @@ import {
   MD3Colors,
   TouchableRipple,
   Button,
-  Text
+  Text,
 } from "react-native-paper";
 import QRCodeDisplay from "./QRCodeDisplay";
 
-export default function CertificateView({ route, navigation }) {
-  const { item } = route.params;
+export default function CertificateFullInfo({ route, navigation }) {
 
+  const { item } = route.item;
+  
   let prevButtonNavigateTo = (
     <Button
       style={styles.button}
       mode="contained"
-      onPress={() => navigation.navigate("CertificatesList")}
+      onPress={() => navigation.navigate("CertificateView")}
     >
       Prev
     </Button>
@@ -27,7 +28,7 @@ export default function CertificateView({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <QRCodeDisplay navigation={navigation} item={item} />
+      <Text>Certificate Full Info</Text>
       {prevButtonNavigateTo}
     </View>
   );
@@ -38,8 +39,7 @@ const defaultMargin = 20;
 const defaultPadding = 20;
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
   button: {
     margin: defaultMargin,
   },

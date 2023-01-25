@@ -10,6 +10,7 @@ import {
 } from "react-native-paper";
 import CertificateView from "./CertificateView";
 import CertificatesList from "./CertificatesList";
+import CertificateFullInfo from "./CertificateFullInfo";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -31,6 +32,11 @@ export default function Certificates({ navigation }) {
         name="CertificateView"
         navigation={navigation}
         component={CertificateView}
+      />
+      <Stack.Screen
+        name="CertificateFullInfo"
+        navigation={navigation}
+        component={CertificateFullInfo}
       />
     </Stack.Navigator>
   );
