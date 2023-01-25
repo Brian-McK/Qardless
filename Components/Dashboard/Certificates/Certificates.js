@@ -1,261 +1,47 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
   List,
   MD2Colors,
   MD3Colors,
   TouchableRipple,
 } from "react-native-paper";
+import CertificateView from "./CertificateView";
+import CertificatesList from "./CertificatesList";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 export default function Certificates({ navigation }) {
-  const dummyCertItems = [
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-  ];
-
-  const certItems = dummyCertItems.map((item, index) => {
-    return (
-      <TouchableRipple key={index} onPress={() => {}} rippleColor={MD2Colors.purpleA200}>
-        <List.Item
-          key={index}
-          title={item.Title}
-          description={`Awarded: ${item.CreatedDate} Ends: ${item.ExpiryDate}`}
-          left={(props) => <List.Icon {...props} icon="clipboard-list" />}
-          right={(props) => (
-            <TouchableOpacity onPress={() => {}}>
-              <List.Icon {...props} icon="eye" color={MD2Colors.purple500} />
-            </TouchableOpacity>
-          )}
-        />
-      </TouchableRipple>
-    );
-  });
-
   return (
-    <ScrollView style={styles.container}>
-      <List.Section>
-        <List.Subheader>My Certificates</List.Subheader>
-        {certItems}
-      </List.Section>
-    </ScrollView>
+    <Stack.Navigator
+      initialRouteName={CertificatesList}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen
+        name="CertificatesList"
+        navigation={navigation}
+        component={CertificatesList}
+      />
+      <Stack.Screen
+        name="CertificateView"
+        navigation={navigation}
+        component={CertificateView}
+      />
+    </Stack.Navigator>
   );
 }
 
+const defaultMargin = 20;
+
+const defaultPadding = 20;
+
 const styles = StyleSheet.create({
-  container: {},
+  flex: 1,
+  backgroundColor: "black",
+  padding: defaultPadding,
 });

@@ -1,14 +1,20 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
   List,
   MD2Colors,
   MD3Colors,
   TouchableRipple,
+  Button,
 } from "react-native-paper";
 
-export default function CertificateView({ navigation }) {
+export default function CertificateView({ route, navigation }) {
+  const { item } = route.params;
+
+  console.log(item)
+
   const dummyCertificate = {
     Id: "12345",
     Title: "Dummy Certificate",
@@ -22,17 +28,36 @@ export default function CertificateView({ navigation }) {
     BusinessId: "12345",
   };
 
+  let prevButtonNavigateTo = (
+    <Button
+      style={styles.button}
+      mode="contained"
+      onPress={() => navigation.navigate("CertificatesList")}
+    >
+      Prev
+    </Button>
+  );
+
   return (
-    <ScrollView style={styles.container}>
-      <Text>Certificate View</Text>
-      <Text>{dummyCertificate}</Text>
-    </ScrollView>
+    <View style={styles.container}>
+      <Text>Certificate View Screen</Text>
+      <Text>{JSON.stringify(item)}</Text>
+      {prevButtonNavigateTo}
+    </View>
   );
 }
+
+const defaultMargin = 20;
+
+const defaultPadding = 20;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    marginBottom: defaultMargin,
   },
 });
