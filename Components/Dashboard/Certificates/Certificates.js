@@ -230,7 +230,7 @@ export default function Certificates({ navigation }) {
 
   const certItems = dummyCertItems.map((item, index) => {
     return (
-      <TouchableRipple onPress={() => {}} rippleColor={MD2Colors.purpleA200}>
+      <TouchableRipple key={index} onPress={() => {}} rippleColor={MD2Colors.purpleA200}>
         <List.Item
           key={index}
           title={item.Title}
