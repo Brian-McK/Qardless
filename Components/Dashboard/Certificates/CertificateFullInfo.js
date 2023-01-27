@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   Image,
   Dimensions,
+  Alert,
+  Linking,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -22,6 +24,33 @@ import {
 } from "react-native-paper";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="file-document" />;
+
+const testSupportedURL = "https://s2.q4cdn.com/175719177/files/doc_presentations/Placeholder-PDF.pdf";
+
+const testUnsupportedURL = "slack://open?team=123456";
+
+const OpenURLButton = ({ url, children }) => {
+  const handlePress = useCallback(async () => {
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${url}`);
+    }
+  }, [url]);
+
+  return (
+    <IconButton
+      icon="download-circle"
+      mode="contained"
+      iconColor={MD3Colors.secondary70}
+      containerColor={MD3Colors.primary95}
+      size={80}
+      onPress={handlePress}
+    />
+  );
+};
 
 export default function CertificateFullInfo({ route, navigation }) {
   const { item } = route?.params || {};
@@ -81,18 +110,10 @@ export default function CertificateFullInfo({ route, navigation }) {
               </View>
             </View>
             <View style={styles.certImgView}>
-              <IconButton
-                icon="download-circle"
-                mode="contained"
-                iconColor={MD3Colors.secondary70}
-                containerColor={MD3Colors.primary95}
-                size={80}
-                onPress={() => console.log("Pressed")}
-              />
+              <OpenURLButton url={testSupportedURL} />
             </View>
           </View>
         </Card.Content>
-        <Card.Actions></Card.Actions>
       </Card>
       {prevButtonNavigateTo}
     </View>
