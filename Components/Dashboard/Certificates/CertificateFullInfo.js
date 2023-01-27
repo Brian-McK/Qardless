@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -11,10 +17,11 @@ import {
   Text,
   Avatar,
   Card,
+  IconButton,
+  Divider,
 } from "react-native-paper";
-import QRCodeDisplay from "./QRCodeDisplay";
 
-const LeftContent = (props) => <Avatar.Icon {...props} icon="clipboard-list" />;
+const LeftContent = (props) => <Avatar.Icon {...props} icon="file-document" />;
 
 export default function CertificateFullInfo({ route, navigation }) {
   const { item } = route?.params || {};
@@ -59,20 +66,29 @@ export default function CertificateFullInfo({ route, navigation }) {
           <View style={styles.cardContent}>
             <View style={styles.certInfo}>
               <View>
-                <Text variant="titleMedium">Issued By</Text>
-                <Text variant="bodyMedium">{item.BusinessId}</Text>
+                <Text variant="titleLarge">Issued By</Text>
+                <Text variant="bodyLarge">{item.BusinessId}</Text>
               </View>
+              <Divider style={styles.divider} bold={true} />
               <View>
-                <Text variant="titleMedium">Date Issued</Text>
-                <Text variant="bodyMedium">{item.CreatedDate}</Text>
+                <Text variant="titleLarge">Date Issued</Text>
+                <Text variant="bodyLarge">{item.CreatedDate}</Text>
               </View>
+              <Divider style={styles.divider} bold={true} />
               <View>
-                <Text variant="titleMedium">Date Expires</Text>
-                <Text variant="bodyMedium">{item.CreatedDate}</Text>
+                <Text variant="titleLarge">Date Expires</Text>
+                <Text variant="bodyLarge">{item.CreatedDate}</Text>
               </View>
             </View>
-            <View style={styles.certImg}>
-              <Text>Hello</Text>
+            <View style={styles.certImgView}>
+              <IconButton
+                icon="download-circle"
+                mode="contained"
+                iconColor={MD3Colors.secondary70}
+                containerColor={MD3Colors.primary95}
+                size={80}
+                onPress={() => console.log("Pressed")}
+              />
             </View>
           </View>
         </Card.Content>
@@ -98,12 +114,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
-  certInfo: {
-    backgroundColor: MD2Colors.amber100,
-  },
-  certImg: {
-    backgroundColor: MD2Colors.blue100,
-    height: 350,
-    width: 180,
+  certInfo: {},
+  divider: {
+    marginVertical: 10,
   },
 });

@@ -239,7 +239,7 @@ export default function CertificatesList({ navigation }) {
           key={index}
           title={item.Title}
           description={`Awarded: ${item.CreatedDate} Ends: ${item.ExpiryDate}`}
-          left={(props) => <List.Icon {...props} icon="clipboard-list" />}
+          left={(props) => <List.Icon {...props} icon="file-document" />}
           right={(props) => (
             <TouchableOpacity
               onPress={() =>
