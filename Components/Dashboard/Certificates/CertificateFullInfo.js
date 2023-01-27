@@ -14,7 +14,7 @@ import QRCodeDisplay from "./QRCodeDisplay";
 
 export default function CertificateFullInfo({ route, navigation }) {
 
-  const { item } = route.item;
+  const { item } = route;
   
   let prevButtonNavigateTo = (
     <Button

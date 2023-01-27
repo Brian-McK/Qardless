@@ -14,7 +14,11 @@ import {
   IconButton,
 } from "react-native-paper";
 
-export default function QRCertOptions({ navigation }) {
+export default function QRCertOptions(props) {
+
+  const { item } = props.item;
+
+  console.log(item);
 
   return (
     <View style={styles.container}>
@@ -23,8 +27,8 @@ export default function QRCertOptions({ navigation }) {
           icon="information"
           iconColor={MD2Colors.cyan600}
           size={40}
-          onPress={() => navigation.navigate("CertificateFullInfo", {
-            
+          onPress={() => props.navigation.navigate("CertificateFullInfo", {
+            item
           })}
         />
         <IconButton
