@@ -20,10 +20,10 @@ export default function QRCertOptions(props) {
 
   return (
     <View style={styles.container}>
-      <Surface style={styles.surface} elevation={4}>
+      <Surface style={styles.surface} elevation={2}>
         <IconButton
           icon="information"
-          iconColor={MD2Colors.cyan600}
+          iconColor={MD3Colors.neutralVariant30}
           size={40}
           onPress={() => props.navigation.navigate("CertificateFullInfo", {
             item
@@ -31,7 +31,7 @@ export default function QRCertOptions(props) {
         />
         <IconButton
           icon="flag"
-          iconColor={MD3Colors.error50}
+          iconColor={MD3Colors.error40}
           size={40}
           onPress={() => console.log("Pressed Flag")}
         />

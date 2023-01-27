@@ -19,7 +19,7 @@ export default function QRCodeDisplay(props) {
 
   return (
     <View style={styles.container}>
-      <Surface style={styles.surface} elevation={4}>
+      <Surface style={styles.surface} elevation={1}>
         <Text variant="headlineMedium" style={styles.title}>
           {item.Title}
         </Text>
@@ -44,13 +44,12 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   title: {
-    color: "white",
-    padding: defaultPadding,
+    margin: defaultMargin
   },
   surface: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: MD2Colors.cyan800,
+    backgroundColor: MD3Colors.primary90,
     borderRadius: 30,
   },
   qrImage: {
