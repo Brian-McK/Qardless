@@ -14,11 +14,16 @@ import {
 import QRCertOptions from "./QRCertOptions";
 
 export default function QRCodeDisplay(props) {
+
+  const { item } = props;
+
+  console.log(item);
+
   return (
     <View style={styles.container}>
       <Surface style={styles.surface} elevation={4}>
         <Text variant="headlineMedium" style={styles.title}>
-          {props.item.Title}
+          {item.Title}
         </Text>
 
         <Image
@@ -26,7 +31,7 @@ export default function QRCodeDisplay(props) {
           source={require("../../../assets/placeholderqrwithpdf.png")}
         />
 
-        <QRCertOptions navigation={props.navigation} item={props.item} />
+        <QRCertOptions navigation={props.navigation} item={item} />
       </Surface>
     </View>
   );

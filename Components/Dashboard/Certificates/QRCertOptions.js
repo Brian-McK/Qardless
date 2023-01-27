@@ -16,9 +16,7 @@ import {
 
 export default function QRCertOptions(props) {
 
-  const { item } = props.item;
-
-  console.log(item);
+  const { item } = props;
 
   return (
     <View style={styles.container}>

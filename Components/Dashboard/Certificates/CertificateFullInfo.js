@@ -13,14 +13,19 @@ import {
 import QRCodeDisplay from "./QRCodeDisplay";
 
 export default function CertificateFullInfo({ route, navigation }) {
+  const { item } = route?.params || {};
 
-  const { item } = route;
-  
   let prevButtonNavigateTo = (
     <Button
       style={styles.button}
       mode="contained"
-      onPress={() => navigation.navigate("CertificateView")}
+      onPress={() =>
+        navigation.navigate({
+          name: "CertificateView",
+          params: item,
+          merge: true,
+        })
+      }
     >
       Prev
     </Button>

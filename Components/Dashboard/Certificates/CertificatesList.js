@@ -241,14 +241,14 @@ export default function CertificatesList({ navigation }) {
           description={`Awarded: ${item.CreatedDate} Ends: ${item.ExpiryDate}`}
           left={(props) => <List.Icon {...props} icon="clipboard-list" />}
           right={(props) => (
-            <TouchableOpacity onPress={() => navigation.navigate("CertificateView", {
-              item
-            })}>
-              <List.Icon
-                {...props}
-                icon="eye"
-                color={MD2Colors.purple500}
-              />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("CertificateView", {
+                  item: item,
+                })
+              }
+            >
+              <List.Icon {...props} icon="eye" color={MD2Colors.purple500} />
             </TouchableOpacity>
           )}
         />
@@ -267,6 +267,5 @@ export default function CertificatesList({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
 });
