@@ -30,12 +30,6 @@ export default function QRCertOptions(props) {
           })}
         />
         <IconButton
-          icon="download"
-          iconColor={MD2Colors.grey700}
-          size={40}
-          onPress={() => console.log("Pressed Download")}
-        />
-        <IconButton
           icon="flag"
           iconColor={MD3Colors.error50}
           size={40}
