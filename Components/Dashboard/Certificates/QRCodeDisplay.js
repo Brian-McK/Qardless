@@ -17,8 +17,6 @@ export default function QRCodeDisplay(props) {
 
   const { item } = props;
 
-  console.log(item);
-
   return (
     <View style={styles.container}>
       <Surface style={styles.surface} elevation={4}>
