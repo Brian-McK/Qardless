@@ -13,8 +13,9 @@ import {
 } from "react-native-paper";
 import QRCertOptions from "./QRCertOptions";
 
-export default function QRCodeDisplay(props) {
+// TODO - https://dev.to/one/react-native-prevent-screen-capture-on-selected-screens-19f6#:~:text=Here%20are%20the%20steps%20to%20prevent%20screen%20capture%20on%20selected%20screens.&text=import%20%7B%20useIsFocused%20%7D%20from%20'%40react,variable%20on%20the%20selected%20screen.
 
+export default function QRCodeDisplay(props) {
   const { item } = props;
 
   return (
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   title: {
-    margin: defaultMargin
+    margin: defaultMargin,
   },
   surface: {
     alignItems: "center",

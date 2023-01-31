@@ -33,7 +33,7 @@ export default function QRCertOptions(props) {
           icon="flag"
           iconColor={MD3Colors.error40}
           size={40}
-          onPress={() => props.navigation.navigate("CertificateFullInfo", {
+          onPress={() => props.navigation.navigate("ReportCertificate", {
             item
           })}
         />
