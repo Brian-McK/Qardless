@@ -22,10 +22,12 @@ import {
   IconButton,
   Divider,
 } from "react-native-paper";
+import { formatDate } from "../../../utils";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="file-document" />;
 
-const testSupportedURL = "https://s2.q4cdn.com/175719177/files/doc_presentations/Placeholder-PDF.pdf";
+const testSupportedURL =
+  "https://s2.q4cdn.com/175719177/files/doc_presentations/Placeholder-PDF.pdf";
 
 const testUnsupportedURL = "slack://open?team=123456";
 
@@ -71,24 +73,15 @@ export default function CertificateFullInfo({ route, navigation }) {
     </Button>
   );
 
-  // Id: "12345",
-  // Title: "Dummy Certificate",
-  // QrCodeUri: "12345",
-  // PdfUri: "12345",
-  // SerialNumber: "12345",
-  // Expires: true,
-  // CreatedDate: "01/01/2023",
-  // ExpiryDate: "01/01/2024",
-  // EndUserId: "12345",
-  // BusinessId: "12345",
+  // {"business": null, "businessId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "certNumber": "string", "courseDate": "2023-02-01T13:56:15.168", "courseTitle": "string", "createdDate": "2023-02-01T13:56:15.168", "endUser": null, "endUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "expiryDate": "2023-02-01T13:56:15.168", "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "pdfUrl": "string"}
 
   return (
     <View style={styles.container}>
       <Card>
         <Card.Title
-          title={item.Title}
+          title={item.courseTitle}
           titleVariant={"titleLarge"}
-          subtitle={`Serial Number: ${item.SerialNumber}`}
+          subtitle={`Serial Number: ${item.certNumber}`}
           left={LeftContent}
         />
         <Card.Content>
@@ -96,17 +89,17 @@ export default function CertificateFullInfo({ route, navigation }) {
             <View style={styles.certInfo}>
               <View>
                 <Text variant="titleLarge">Issued By</Text>
-                <Text variant="bodyLarge">{item.BusinessId}</Text>
+                <Text variant="bodyLarge">{item.businessId}</Text>
               </View>
               <Divider style={styles.divider} bold={true} />
               <View>
                 <Text variant="titleLarge">Date Issued</Text>
-                <Text variant="bodyLarge">{item.CreatedDate}</Text>
+                <Text variant="bodyLarge">{formatDate(item.createdDate)}</Text>
               </View>
               <Divider style={styles.divider} bold={true} />
               <View>
                 <Text variant="titleLarge">Date Expires</Text>
-                <Text variant="bodyLarge">{item.CreatedDate}</Text>
+                <Text variant="bodyLarge">{formatDate(item.expiryDate)}</Text>
               </View>
             </View>
             <View style={styles.certImgView}>
@@ -132,10 +125,13 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: defaultPadding,
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-around",
     alignItems: "center",
   },
-  certInfo: {},
+  certInfo: {
+    marginBottom: defaultMargin,
+  },
   divider: {
     marginVertical: 10,
   },

@@ -4,22 +4,20 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const certificatesApiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://9e3d-64-43-50-159.eu.ngrok.io/api",
+    baseUrl: "https://qardlessapi.azurewebsites.net/api/",
   }),
   tagTypes: ["Certificates"],
   endpoints: (builder) => ({
     getCertificates: builder.query({
-      query: () => `certificates`,
+      query: () => `Certificates`,
       providesTags: ["Certificates"],
     }),
     getCertificateById: builder.query({
-      query: (id) => `certificates/${id}`,
+      query: (id) => `Certificates/${id}`,
       providesTags: ["Certificates"],
     }),
   }),
 });
 
-export const {
-  useGetCertificatesQuery,
-  useGetCertificateByIdQuery,
-} = certificatesApiSlice;
+export const { useGetCertificatesQuery, useGetCertificateByIdQuery } =
+  certificatesApiSlice;

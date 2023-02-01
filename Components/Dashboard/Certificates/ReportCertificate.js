@@ -50,17 +50,6 @@ export default function ReportCertificate({ route, navigation }) {
     </Button>
   );
 
-  // Id: "12345",
-  // Title: "Dummy Certificate",
-  // QrCodeUri: "12345",
-  // PdfUri: "12345",
-  // SerialNumber: "12345",
-  // Expires: true,
-  // CreatedDate: "01/01/2023",
-  // ExpiryDate: "01/01/2024",
-  // EndUserId: "12345",
-  // BusinessId: "12345",
-
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -75,7 +64,7 @@ export default function ReportCertificate({ route, navigation }) {
           multiline={true}
           numberOfLines={12}
           mode="outlined"
-          label="Enter issue here..."
+          label={`Enter issue for certificate ${item.certNumber}`}
           value={issue}
           onChangeText={(issue) => setIssue(issue)}
         />
