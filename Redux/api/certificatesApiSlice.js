@@ -16,8 +16,18 @@ export const certificatesApiSlice = createApi({
       query: (id) => `Certificates/${id}`,
       providesTags: ["Certificates"],
     }),
+    reportCertificateIssue: builder.mutation({
+      query: (body) => ({
+        url: "Changelogs",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
-export const { useGetCertificatesQuery, useGetCertificateByIdQuery } =
-  certificatesApiSlice;
+export const {
+  useGetCertificatesQuery,
+  useGetCertificateByIdQuery,
+  useReportCertificateIssueMutation,
+} = certificatesApiSlice;

@@ -24,20 +24,35 @@ import {
   IconButton,
   Divider,
   TextInput,
+  ActivityIndicator,
 } from "react-native-paper";
+import { useReportCertificateIssueMutation } from "../../../Redux/api/certificatesApiSlice";
 
 export default function ReportCertificate({ route, navigation }) {
   const { item } = route?.params || {};
-  const [issue, setIssue] = useState();
+  const [issue, setIssue] = useState("");
 
-  const submitFormData = async () => {
-    console.log("!! Submit Report Certificate");
+  const [reportCertificateIssue, { isError, isLoading, isSuccess }] =
+    useReportCertificateIssueMutation();
+
+  const submitFormData = () => {
+    if (!issue || issue == null) {
+      return;
+    }
+    const issuePayload = {
+      type: "CertificateIssue",
+      content: `EndUser: ${"exampleEndUser2"}, Certificate: ${"exampleCertificate2"}, Issue: ${issue}`,
+      wasRead: false,
+    };
+
+    reportCertificateIssue(issuePayload);
   };
 
   let prevButtonNavigateTo = (
     <Button
       style={styles.button}
       mode="contained"
+      disabled={isLoading}
       onPress={() =>
         navigation.navigate({
           name: "CertificateView",
@@ -68,8 +83,20 @@ export default function ReportCertificate({ route, navigation }) {
           value={issue}
           onChangeText={(issue) => setIssue(issue)}
         />
+        {isSuccess && (
+          <Text style={styles.successMessage} variant="headlineSmall">
+            Report Submitted
+          </Text>
+        )}
+        {isError && (
+          <Text variant="headlineSmall" style={styles.warningMessage}>
+            Oops, something went wrong! :(
+          </Text>
+        )}
         <Button
           style={styles.button}
+          loading={isLoading}
+          disabled={isLoading}
           mode="contained"
           onPress={() => submitFormData()}
         >
@@ -97,6 +124,9 @@ const styles = StyleSheet.create({
   },
   title: {
     margin: defaultMargin,
+  },
+  successMessage: {
+    textAlign: "center",
   },
   inputField: {
     margin: defaultMargin,
