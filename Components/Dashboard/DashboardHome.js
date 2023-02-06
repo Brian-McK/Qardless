@@ -32,7 +32,7 @@ export default function DashboardHome({ route, navigation }) {
       accessible={false}
     >
       <SafeAreaView style={styles.container}>
-        <RootNavigator navigation={navigation} />
+        <RootNavigator navigation={navigation} user={user} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

@@ -14,8 +14,11 @@ import {
 } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function DrawerContent(props) {
-  const fullName = "Brian McKenna";
+export default function DrawerContent({ user, navigation }) {
+
+  console.log(user);
+
+  const fullName = user.name;
 
   const fullNameArr = fullName.split(" ");
 
@@ -39,18 +42,18 @@ export default function DrawerContent(props) {
           />
         )}
         label={item.name}
-        onPress={() => props.navigation.navigate(item.name)}
+        onPress={() => navigation.navigate(item.name)}
       />
     );
   });
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView>
       <View style={styles.drawerContent}>
         <View style={styles.userInfoSection}>
           <Avatar.Text label={initials} size={50} />
           <Title style={styles.title}>{fullName}</Title>
-          <Caption style={styles.caption}>brian@gmail.com</Caption>
+          <Caption style={styles.caption}>{user.email}</Caption>
         </View>
         <Drawer.Section style={styles.drawerSection}>
           {drawerItems}

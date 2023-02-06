@@ -31,20 +31,40 @@ export default function Login({ navigation }) {
       // email verfied and password hash need to be fixed - TODO
       password: password,
     };
-    try {
-      const data = await loginUser(userLoginPayload);
-      console.log(data);
+    // try {
+    //   const data = await loginUser(userLoginPayload);
 
-      if (data) {
-        setUser(data);
+    //   if (data) {
+    //     setUser(data);
 
-        navigation.navigate("DashboardHome", {
-          user,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    //     navigation.navigate("DashboardHome", {
+    //       user,
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    loginUser(userLoginPayload)
+      .unwrap()
+      .then((fulfilled) => {
+        console.log("fulfilled");
+        console.log(fulfilled);
+
+        if (fulfilled) {
+          setUser(fulfilled);
+
+          navigation.navigate("DashboardHome", {
+            user,
+          });
+
+          userLoginPayload = {};
+        }
+      })
+      .catch((rejected) => {
+        console.error("rejected");
+        console.error(rejected);
+      });
   };
 
   useEffect(() => {

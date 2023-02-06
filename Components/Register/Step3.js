@@ -36,7 +36,6 @@ export default function Step3({ navigation }) {
 
   const registerEndUser = (user) => {
     console.log("registerEndUser: ");
-    console.log(user);
 
     registerUser(user);
   };
