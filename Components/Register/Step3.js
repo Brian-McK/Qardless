@@ -16,9 +16,7 @@ import {
   isLoading,
   // registerUser,
 } from "../../Redux/registerSlice";
-import {
-  useRegisterUserMutation,
-} from "../../Redux/api/usersApiSlice";
+import { useRegisterUserMutation } from "../../Redux/api/usersApiSlice";
 
 export default function Step3({ navigation }) {
   const [eircode, setEircode] = useState();
@@ -35,8 +33,6 @@ export default function Step3({ navigation }) {
   );
 
   const registerEndUser = (user) => {
-    console.log("registerEndUser: ");
-
     registerUser(user);
   };
 
@@ -70,10 +66,7 @@ export default function Step3({ navigation }) {
     if (isFalsy) {
       return;
     }
-
     registerEndUser(userRegisterPayload);
-
-    console.log("!!", isLoading, isError, isSuccess, isUninitialized, error);
   };
 
   const onDismissSnackBar = () => setSnackbarVisible(false);

@@ -13,7 +13,7 @@ export const certificatesApiSlice = createApi({
       providesTags: ["Certificates"],
     }),
     getCertificatesByUserId: builder.query({
-      query: () => `Certificates`,
+      query: (id) => `EndUsers/${id}/Certificates`,
       providesTags: ["Certificates"],
     }),
     getCertificateById: builder.query({

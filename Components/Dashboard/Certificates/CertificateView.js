@@ -15,8 +15,6 @@ import QRCodeDisplay from "./QRCodeDisplay";
 export default function CertificateView({ route, navigation }) {
   const { item } = route?.params || {};
 
-  console.log(item);
-
   let prevButtonNavigateTo = (
     <Button
       style={styles.button}

@@ -27,7 +27,7 @@ export default function QRCodeDisplay(props) {
 
         <Image
           style={styles.qrImage}
-          source={require("../../../assets/placeholderqrwithpdf.png")}
+          source={require("../../../assets/beanhonlyforklift.png")}
         />
 
         <QRCertOptions navigation={props.navigation} item={item} />

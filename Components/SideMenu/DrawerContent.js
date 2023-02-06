@@ -22,8 +22,6 @@ export default function DrawerContent({ user, navigation }) {
 
   let initials = null;
 
-  console.log(fullNameArr);
-
   if(fullNameArr.length > 1){
     initials = fullNameArr.shift().charAt(0) + fullNameArr.pop().charAt(0);
   }

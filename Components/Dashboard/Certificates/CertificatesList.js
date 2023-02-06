@@ -24,7 +24,7 @@ export default function CertificatesList({ user, navigation }) {
     isFetching,
     isUninitialized,
     error,
-  } = useGetCertificatesByUserIdQuery();
+  } = useGetCertificatesByUserIdQuery("d6a02081-a4ca-4197-4730-08db084abe5b");
 
   console.log(
     "!!",
