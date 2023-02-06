@@ -21,7 +21,6 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loginUser, result] = useLoginUserMutation();
-  const [user, setUser] = useState();
 
   // commented out to replicate going to the menu screen - TODO
 
@@ -31,38 +30,17 @@ export default function Login({ navigation }) {
       // email verfied and password hash need to be fixed - TODO
       password: password,
     };
-    // try {
-    //   const data = await loginUser(userLoginPayload);
-
-    //   if (data) {
-    //     setUser(data);
-
-    //     navigation.navigate("DashboardHome", {
-    //       user,
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
 
     loginUser(userLoginPayload)
       .unwrap()
       .then((fulfilled) => {
-        console.log("fulfilled");
-        console.log(fulfilled);
-
         if (fulfilled) {
-          setUser(fulfilled);
-
           navigation.navigate("DashboardHome", {
-            user,
+            user: fulfilled,
           });
-
-          userLoginPayload = {};
         }
       })
       .catch((rejected) => {
-        console.error("rejected");
         console.error(rejected);
       });
   };
