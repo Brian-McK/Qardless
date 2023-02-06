@@ -17,9 +17,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
 import RootNavigator from "../SideMenu/RootNavigator";
 
-export default function DashboardHome({ navigation }) {
+export default function DashboardHome({ route, navigation }) {
+  const { user } = route?.params || {};
+
   useEffect(() => {
     console.log("Dashboard screen loaded");
+
+    console.log(user);
   }, []);
 
   return (
@@ -28,7 +32,7 @@ export default function DashboardHome({ navigation }) {
       accessible={false}
     >
       <SafeAreaView style={styles.container}>
-        <RootNavigator navigation={navigation}/>
+        <RootNavigator navigation={navigation} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

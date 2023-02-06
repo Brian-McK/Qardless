@@ -30,7 +30,7 @@ export default function Step3({ navigation }) {
     { isLoading, isError, isSuccess, isUninitialized, error },
   ] = useRegisterUserMutation();
 
-  const { step1FormData, step2FormData, step3FormData, user } = useSelector(
+  const { step1FormData, step3FormData, user } = useSelector(
     (state) => state.register
   );
 
@@ -53,15 +53,12 @@ export default function Step3({ navigation }) {
     );
 
     const userRegisterPayload = {
-      firstName: step1FormData.firstName,
-      lastName: step1FormData.surname,
+      name: `${step1FormData.firstName} ${step1FormData.surname}`,
       email: step1FormData.email,
       // email verfied and password hash need to be fixed - TODO
       emailVerified: true,
       passwordHash: step3FormData.password,
-      phoneMobile: step3FormData.phone,
-      AddressCode: step3FormData.eircode,
-      AddressDetailed: `${step2FormData.address1}, ${step2FormData.address2}, ${step2FormData.county}`,
+      contactNumber: step3FormData.phone,
     };
 
     const isFalsy = Object.values(userRegisterPayload).some((value) => {

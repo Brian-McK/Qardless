@@ -2,31 +2,31 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define a service using a base URL and expected endpoints
 export const usersApiSlice = createApi({
-  reducerPath: "api",
+  reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://qardlessapi.azurewebsites.net/api/",
+    baseUrl: "https://dd51-80-233-51-205.eu.ngrok.io/api/",
   }),
-  tagTypes: ["Enduser"],
+  tagTypes: ["Endusers"],
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => `enduser`,
-      providesTags: ["Enduser"],
+      query: () => `endusers`,
+      providesTags: ["Endusers"],
     }),
     loginUser: builder.mutation({
       query: (body) => ({
-        url: "enduser",
+        url: "login",
         method: "POST",
-        body,
+        body
       }),
-      invalidatesTags: ["Enduser"],
+      invalidatesTags: ["Endusers"],
     }),
     registerUser: builder.mutation({
       query: (body) => ({
-        url: "enduser",
+        url: "endusers",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Enduser"],
+      invalidatesTags: ["Endusers"],
     }),
   }),
 });
