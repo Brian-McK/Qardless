@@ -21,7 +21,7 @@ export default function QRCodeDisplay(props) {
   return (
     <View style={styles.container}>
       <Surface style={styles.surface} elevation={1}>
-        <Text variant="headlineMedium" style={styles.title}>
+        <Text variant="headlineSmall" style={styles.title}>
           {item.courseTitle}
         </Text>
 

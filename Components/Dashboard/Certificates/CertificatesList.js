@@ -11,9 +11,11 @@ import {
 } from "react-native-paper";
 import { formatDate } from "../../../utils";
 
-import { useGetCertificatesQuery } from "../../../Redux/api/certificatesApiSlice";
+import { useGetCertificatesByUserIdQuery } from "../../../Redux/api/certificatesApiSlice";
 
-export default function CertificatesList({ navigation }) {
+export default function CertificatesList({ user, navigation }) {
+  console.log("!! CERT LISTS", user);
+
   const {
     data = [],
     isLoading,
@@ -22,7 +24,7 @@ export default function CertificatesList({ navigation }) {
     isFetching,
     isUninitialized,
     error,
-  } = useGetCertificatesQuery();
+  } = useGetCertificatesByUserIdQuery();
 
   console.log(
     "!!",
@@ -257,6 +259,7 @@ export default function CertificatesList({ navigation }) {
 
   if (data) {
     certItems = data.map((item, index) => {
+      
       return (
         <TouchableRipple
           key={index}

@@ -17,7 +17,7 @@ export default function RootNavigator({ user, navigation }) {
       drawerContent={() => <DrawerContent user={loggedInUser} navigation={navigation} />}
     >
       <Drawer.Screen name="Overview" component={DashboardOverview} />
-      <Drawer.Screen name="Certificates" component={Certificates} />
+      <Drawer.Screen name="Certificates" component={Certificates} user={loggedInUser} />
       <Drawer.Screen name="QR Scanner" component={QRScanner} />
     </Drawer.Navigator>
   );

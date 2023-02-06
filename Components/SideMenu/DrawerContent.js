@@ -16,13 +16,20 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function DrawerContent({ user, navigation }) {
 
-  console.log(user);
-
   const fullName = user.name;
 
   const fullNameArr = fullName.split(" ");
 
-  const initials = fullNameArr.shift().charAt(0) + fullNameArr.pop().charAt(0);
+  let initials = null;
+
+  console.log(fullNameArr);
+
+  if(fullNameArr.length > 1){
+    initials = fullNameArr.shift().charAt(0) + fullNameArr.pop().charAt(0);
+  }
+  else {
+    initials = fullName.charAt(0);
+  }
 
   const navItems = [
     { name: "Home", iconName: "home" },

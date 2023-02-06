@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const usersApiSlice = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://dd51-80-233-51-205.eu.ngrok.io/api/",
+    baseUrl: "https://qardlessapi.azurewebsites.net/api/",
   }),
   tagTypes: ["Endusers"],
   endpoints: (builder) => ({
