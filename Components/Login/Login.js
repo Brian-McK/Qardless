@@ -70,6 +70,7 @@ export default function Login({ navigation }) {
           mode="outlined"
           label="Password"
           value={password}
+          secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
         <Button style={styles.button} mode="contained" onPress={handler}>

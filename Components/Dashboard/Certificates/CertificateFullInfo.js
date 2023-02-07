@@ -27,7 +27,7 @@ import { formatDate } from "../../../utils";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="file-document" />;
 
 const testSupportedURL =
-  "https://s2.q4cdn.com/175719177/files/doc_presentations/Placeholder-PDF.pdf";
+  "https://qardlesspdfs.blob.core.windows.net/pdfs/BeanHonlyForkLift.pdf";
 
 const testUnsupportedURL = "slack://open?team=123456";
 

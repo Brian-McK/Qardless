@@ -41,8 +41,7 @@ export default function ReportCertificate({ route, navigation }) {
     }
     const issuePayload = {
       type: "CertificateIssue",
-      content: `EndUser: ${"exampleEndUser2"}, Certificate: ${"exampleCertificate2"}, Issue: ${issue}`,
-      wasRead: false,
+      content: `EndUser: ${"Bean Honly"}, Certificate: ${"Certificate"}, Issue: ${issue}`
     };
 
     reportCertificateIssue(issuePayload);

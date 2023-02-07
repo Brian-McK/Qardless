@@ -22,6 +22,9 @@ export default function DashboardHome({ route, navigation }) {
 
   useEffect(() => {
     console.log("Dashboard screen loaded");
+
+    console.log(user);
+    
   }, []);
 
   return (
