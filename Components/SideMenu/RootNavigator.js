@@ -17,10 +17,14 @@ export default function RootNavigator({ user, navigation }) {
     >
       <Drawer.Screen
         name="Overview"
-        initialParams={{user}}
+        initialParams={{ user }}
         component={DashboardOverview}
       />
-      <Drawer.Screen name="Certificates" component={Certificates} user={user} />
+      <Drawer.Screen
+        name="Certificates"
+        initialParams={{ user }}
+        component={Certificates}
+      />
       <Drawer.Screen name="QR Scanner" component={QRScanner} />
     </Drawer.Navigator>
   );

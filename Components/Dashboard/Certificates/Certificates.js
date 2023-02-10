@@ -16,9 +16,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
-export default function Certificates({ user, navigation }) {
-
-  console.log(user);
+export default function Certificates({ route, navigation }) {
+  const user = route.params.user;
 
   return (
     <Stack.Navigator
@@ -29,9 +28,10 @@ export default function Certificates({ user, navigation }) {
     >
       <Stack.Screen
         name="CertificatesList"
+        user={user}
+        initialParams={{ user }}
         navigation={navigation}
         component={CertificatesList}
-        user={user}
       />
       <Stack.Screen
         name="CertificateView"

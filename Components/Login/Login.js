@@ -45,10 +45,6 @@ export default function Login({ navigation }) {
       });
   };
 
-  useEffect(() => {
-    console.log("Login screen loaded");
-  }, []);
-
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}

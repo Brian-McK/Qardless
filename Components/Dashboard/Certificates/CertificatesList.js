@@ -13,7 +13,8 @@ import { formatDate } from "../../../utils";
 
 import { useGetCertificatesByUserIdQuery } from "../../../Redux/api/certificatesApiSlice";
 
-export default function CertificatesList({ user, navigation }) {
+export default function CertificatesList({ route, navigation }) {
+  const user = route.params.user;
 
   const {
     data = [],
@@ -23,242 +24,12 @@ export default function CertificatesList({ user, navigation }) {
     isFetching,
     isUninitialized,
     error,
-  } = useGetCertificatesByUserIdQuery("c00cd5ff-4d89-4129-5909-08db090082d6");
-
-  console.log(
-    "!!",
-    data,
-    isLoading,
-    isError,
-    isSuccess,
-    isUninitialized,
-    error
-  );
-
-  let dummyCertItems = [
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-    {
-      Id: "12345",
-      Title: "Dummy Certificate",
-      QrCodeUri: "12345",
-      PdfUri: "12345",
-      SerialNumber: "12345",
-      Expires: true,
-      CreatedDate: "01/01/2023",
-      ExpiryDate: "01/01/2024",
-      EndUserId: "12345",
-      BusinessId: "12345",
-    },
-  ];
+  } = useGetCertificatesByUserIdQuery(user.id);
 
   let certItems = [];
 
   if (data) {
     certItems = data.map((item, index) => {
-      
       return (
         <TouchableRipple
           key={index}
@@ -317,8 +88,6 @@ export default function CertificatesList({ user, navigation }) {
 }
 
 const defaultMargin = 20;
-
-const defaultPadding = 20;
 
 const styles = StyleSheet.create({
   container: {},

@@ -21,7 +21,7 @@ export default function DashboardHome({ route, navigation }) {
   const { user } = route?.params || {};
 
   useEffect(() => {
-    console.log("Dashboard screen loaded");    
+    console.log("Dashboard screen loaded");
     console.log(user);
   }, []);
 
