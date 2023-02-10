@@ -14,7 +14,6 @@ import { formatDate } from "../../../utils";
 import { useGetCertificatesByUserIdQuery } from "../../../Redux/api/certificatesApiSlice";
 
 export default function CertificatesList({ user, navigation }) {
-  console.log("!! CERT LISTS", user);
 
   const {
     data = [],

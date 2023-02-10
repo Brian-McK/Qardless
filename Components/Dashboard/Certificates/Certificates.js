@@ -17,6 +17,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
 
 export default function Certificates({ user, navigation }) {
+
+  console.log(user);
+
   return (
     <Stack.Navigator
       initialRouteName={CertificatesList}

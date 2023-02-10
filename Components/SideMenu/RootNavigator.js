@@ -9,15 +9,18 @@ import Certificates from "../Dashboard/Certificates/Certificates";
 const Drawer = createDrawerNavigator();
 
 export default function RootNavigator({ user, navigation }) {
-
-  const loggedInUser = user;
-
   return (
     <Drawer.Navigator
-      drawerContent={() => <DrawerContent user={loggedInUser} navigation={navigation} />}
+      drawerContent={() => (
+        <DrawerContent user={user} navigation={navigation} />
+      )}
     >
-      <Drawer.Screen name="Overview" component={DashboardOverview} user={loggedInUser} />
-      <Drawer.Screen name="Certificates" component={Certificates} user={loggedInUser} />
+      <Drawer.Screen
+        name="Overview"
+        initialParams={{user}}
+        component={DashboardOverview}
+      />
+      <Drawer.Screen name="Certificates" component={Certificates} user={user} />
       <Drawer.Screen name="QR Scanner" component={QRScanner} />
     </Drawer.Navigator>
   );
