@@ -141,6 +141,7 @@ export default function Step3({ navigation }) {
           mode="outlined"
           label="Password"
           value={password}
+          secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
         <Button
