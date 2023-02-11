@@ -29,7 +29,6 @@ export default function Step1() {
 
   useFocusEffect(
     useCallback(() => {
-      console.log("Loaded 1");
       dispatch(currentStep(1));
     }, [dispatch, currentStep])
   );

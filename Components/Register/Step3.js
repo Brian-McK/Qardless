@@ -57,18 +57,7 @@ export default function Step3({ navigation }) {
 
     setVisible(true);
 
-    registerUser(userDetails)
-      .unwrap()
-      .then((fulfilled) => {
-        if (fulfilled) {
-          setTimeout(() => {
-            navigation.navigate("Home");
-          }, 3000);
-        }
-      })
-      .catch((rejected) => {
-        console.log(rejected);
-      });
+    registerUser(userDetails);
   };
 
   if (isSuccess) {
@@ -82,7 +71,9 @@ export default function Step3({ navigation }) {
           },
           {
             label: "Login",
-            onPress: () => navigation.navigate("Home"),
+            onPress: () => {
+              navigation.navigate("Home");
+            },
           },
         ]}
         message={"Successfully registered, Go to the login screen to login!"}
@@ -111,7 +102,6 @@ export default function Step3({ navigation }) {
 
   useFocusEffect(
     useCallback(() => {
-      console.log("Loaded 3");
       dispatch(currentStep(3));
     }, [dispatch, currentStep])
   );

@@ -11,14 +11,7 @@ export function formatDate(dateStr) {
 }
 
 export function isFalsy(obj) {
-
-  console.log("isfalsy func",obj);
-
   Object.values(obj).some((value) => {
-
-
-    console.log(value);
-    
     if (!value) {
       return true;
     }

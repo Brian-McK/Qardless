@@ -48,7 +48,6 @@ export default function Login({ navigation }) {
         }
       })
       .catch((rejected) => {
-        console.log(rejected);
         resetState();
       });
   };

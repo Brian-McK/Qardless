@@ -8,7 +8,6 @@ export default function DisplayMessage({
   actions,
   visible,
 }) {
-  console.log("DisplayMessage component", visible);
   return (
     <Banner
       visible={visible}
