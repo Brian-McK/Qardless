@@ -9,22 +9,22 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   ProgressBar,
   MD3Colors,
+  MD2Colors,
   Text,
   Button,
   TextInput,
+  ActivityIndicator,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector, useDispatch } from "react-redux";
 import { useLoginUserMutation } from "../../Redux/api/usersApiSlice";
+import DisplayMessage from "../General/DisplayMessage";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loginUser, result] = useLoginUserMutation();
 
-  // commented out to replicate going to the menu screen - TODO
-
-  const handler = async () => {
+  const loginHandler = async () => {
     const userLoginPayload = {
       email: email,
       // email verfied and password hash need to be fixed - TODO
@@ -41,7 +41,7 @@ export default function Login({ navigation }) {
         }
       })
       .catch((rejected) => {
-        console.error(rejected);
+        console.log(rejected);
       });
   };
 
@@ -69,9 +69,28 @@ export default function Login({ navigation }) {
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
-        <Button style={styles.button} mode="contained" onPress={handler}>
+        <Button
+          style={styles.button}
+          disabled={result.isLoading}
+          mode="contained"
+          onPress={loginHandler}
+        >
           Login
         </Button>
+        {result.isLoading && (
+          <ActivityIndicator
+            style={styles.spinner}
+            size={"large"}
+            animating={true}
+            color={MD2Colors.deepPurple900}
+          />
+        )}
+        {result.isError && (
+          <DisplayMessage
+            message={"There was an error logging in, please check your details"}
+            materialCommunityIconName={"alert-circle"}
+          />
+        )}
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -96,5 +115,8 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: defaultMargin,
+  },
+  spinner: {
+    margin: defaultMargin,
   },
 });
