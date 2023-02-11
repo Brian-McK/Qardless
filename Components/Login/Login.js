@@ -24,6 +24,12 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState();
   const [loginUser, result] = useLoginUserMutation();
 
+  // reset to initial state
+  const resetState = () => {
+    setEmail("");
+    setPassword("");
+  };
+
   const loginHandler = async () => {
     const userLoginPayload = {
       email: email,
@@ -38,10 +44,12 @@ export default function Login({ navigation }) {
           navigation.navigate("DashboardHome", {
             user: fulfilled,
           });
+          resetState();
         }
       })
       .catch((rejected) => {
         console.log(rejected);
+        resetState();
       });
   };
 
