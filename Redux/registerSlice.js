@@ -1,5 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { Axios } from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   formStepNumber: 0,

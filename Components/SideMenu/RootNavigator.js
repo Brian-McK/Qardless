@@ -1,5 +1,4 @@
 import React from "react";
-import { Text, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DrawerContent from "./DrawerContent";
 import QRScanner from "../Dashboard/QRScanner";

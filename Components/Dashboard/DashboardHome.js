@@ -1,20 +1,6 @@
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
-import { useState, useEffect } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  ProgressBar,
-  MD3Colors,
-  Text,
-  Button,
-  TextInput,
-} from "react-native-paper";
+import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector, useDispatch } from "react-redux";
 import RootNavigator from "../SideMenu/RootNavigator";
 
 export default function DashboardHome({ route, navigation }) {

@@ -1,13 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  List,
-  MD2Colors,
-  MD3Colors,
-  TouchableRipple,
-} from "react-native-paper";
+import { StyleSheet } from "react-native";
 import CertificateView from "./CertificateView";
 import CertificatesList from "./CertificatesList";
 import CertificateFullInfo from "./CertificateFullInfo";

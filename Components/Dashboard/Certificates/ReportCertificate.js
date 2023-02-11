@@ -1,31 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  Alert,
-  Linking,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  List,
-  MD2Colors,
-  MD3Colors,
-  TouchableRipple,
-  Button,
-  Text,
-  Avatar,
-  Card,
-  IconButton,
-  Divider,
-  TextInput,
-  ActivityIndicator,
-} from "react-native-paper";
+import { Button, Text, TextInput } from "react-native-paper";
 import { useReportCertificateIssueMutation } from "../../../Redux/api/certificatesApiSlice";
 
 export default function ReportCertificate({ route, navigation }) {
@@ -41,7 +21,7 @@ export default function ReportCertificate({ route, navigation }) {
     }
     const issuePayload = {
       type: "CertificateIssue",
-      content: `EndUser: ${"Bean Honly"}, Certificate: ${"Certificate"}, Issue: ${issue}`
+      content: `EndUser: ${"Bean Honly"}, Certificate: ${"Certificate"}, Issue: ${issue}`,
     };
 
     reportCertificateIssue(issuePayload);

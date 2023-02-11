@@ -1,14 +1,10 @@
 import {
   StyleSheet,
-  View,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { useState, useEffect } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useState } from "react";
 import {
-  ProgressBar,
-  MD3Colors,
   MD2Colors,
   Text,
   Button,
@@ -25,7 +21,7 @@ export default function Login({ navigation }) {
   const [visible, setVisible] = useState(true);
   const [
     loginUser,
-    { data, isLoading, isError, isSuccess, isUninitialized, error },
+    { data, isLoading, isError, isSuccess },
   ] = useLoginUserMutation();
 
   let displayMessage;

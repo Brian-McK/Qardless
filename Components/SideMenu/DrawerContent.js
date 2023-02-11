@@ -1,31 +1,19 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
-import {
-  useTheme,
-  Avatar,
-  Title,
-  Caption,
-  Paragraph,
-  Drawer,
-  Text,
-  TouchableRipple,
-  Switch,
-} from "react-native-paper";
+import { Avatar, Title, Caption, Drawer, Switch } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function DrawerContent({ user, navigation }) {
-
   const fullName = user.name;
 
   const fullNameArr = fullName.split(" ");
 
   let initials = null;
 
-  if(fullNameArr.length > 1){
+  if (fullNameArr.length > 1) {
     initials = fullNameArr.shift().charAt(0) + fullNameArr.pop().charAt(0);
-  }
-  else {
+  } else {
     initials = fullName.charAt(0);
   }
 

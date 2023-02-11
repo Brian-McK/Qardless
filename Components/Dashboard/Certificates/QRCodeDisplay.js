@@ -1,16 +1,6 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  List,
-  MD2Colors,
-  MD3Colors,
-  TouchableRipple,
-  Button,
-  Text,
-  Surface,
-} from "react-native-paper";
+import { View, StyleSheet, Image } from "react-native";
+import { MD3Colors, Text, Surface } from "react-native-paper";
 import QRCertOptions from "./QRCertOptions";
 
 // TODO - https://dev.to/one/react-native-prevent-screen-capture-on-selected-screens-19f6#:~:text=Here%20are%20the%20steps%20to%20prevent%20screen%20capture%20on%20selected%20screens.&text=import%20%7B%20useIsFocused%20%7D%20from%20'%40react,variable%20on%20the%20selected%20screen.

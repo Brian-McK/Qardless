@@ -1,21 +1,14 @@
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { useState, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useState, useCallback } from "react";
 import {
-  ScrollView,
   StyleSheet,
-  Text,
   View,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { TextInput, Button, Snackbar, MD2Colors } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currentStep,
-  getStep3FormData,
-  isLoading,
-  // registerUser,
-} from "../../Redux/registerSlice";
+import { currentStep, getStep3FormData } from "../../Redux/registerSlice";
 import { useRegisterUserMutation } from "../../Redux/api/usersApiSlice";
 import DisplayMessage from "../General/DisplayMessage";
 
@@ -24,12 +17,10 @@ export default function Step3({ navigation }) {
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(true);
-  const [
-    registerUser,
-    { isLoading, isError, isSuccess, isUninitialized, error },
-  ] = useRegisterUserMutation();
+  const [registerUser, { isLoading, isError, isSuccess }] =
+    useRegisterUserMutation();
 
-  const { step1FormData, step3FormData, user } = useSelector(
+  const { step1FormData, step3FormData } = useSelector(
     (state) => state.register
   );
 

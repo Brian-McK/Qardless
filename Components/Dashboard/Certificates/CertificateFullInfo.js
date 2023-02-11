@@ -2,19 +2,11 @@ import React, { useCallback } from "react";
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
   Alert,
   Linking,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {
-  List,
-  MD2Colors,
   MD3Colors,
-  TouchableRipple,
   Button,
   Text,
   Avatar,

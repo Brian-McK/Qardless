@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { StyleSheet, Image } from "react-native";
-import { Text, Banner, MD2Colors } from "react-native-paper";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Banner } from "react-native-paper";
 
 export default function DisplayMessage({
   message,

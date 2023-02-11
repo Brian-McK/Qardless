@@ -1,17 +1,16 @@
 import { StyleSheet, View } from "react-native";
-import { Text, Button } from "react-native-paper";
+import { Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
 import QardlessHomeImage from "./QardlessHomeImage";
 
 export default function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <QardlessHomeImage/>
+      <QardlessHomeImage />
       <View style={styles.buttonGroup}>
         <Button
           style={styles.button}
-          mode="contained"          
+          mode="contained"
           onPress={() => navigation.navigate("Register")}
         >
           Register
@@ -24,7 +23,7 @@ export default function Home({ navigation }) {
   );
 }
 
-const defaultMargin= 20;
+const defaultMargin = 20;
 
 const defaultPadding = 20;
 
@@ -42,6 +41,6 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   button: {
-    marginBottom: defaultMargin
-  }
+    marginBottom: defaultMargin,
+  },
 });

@@ -20,10 +20,7 @@ export default function CertificatesList({ route, navigation }) {
     data = [],
     isLoading,
     isError,
-    isSuccess,
     isFetching,
-    isUninitialized,
-    error,
   } = useGetCertificatesByUserIdQuery(user.id);
 
   let certItems = [];
