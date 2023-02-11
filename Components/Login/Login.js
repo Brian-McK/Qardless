@@ -22,7 +22,13 @@ import DisplayMessage from "../General/DisplayMessage";
 export default function Login({ navigation }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [loginUser, result] = useLoginUserMutation();
+  const [visible, setVisible] = useState(true);
+  const [
+    loginUser,
+    { data, isLoading, isError, isSuccess, isUninitialized, error },
+  ] = useLoginUserMutation();
+
+  let displayMessage;
 
   // reset to initial state
   const resetState = () => {
@@ -31,26 +37,40 @@ export default function Login({ navigation }) {
   };
 
   const loginHandler = async () => {
-    const userLoginPayload = {
+    const userLoginDetails = {
       email: email,
       // email verfied and password hash need to be fixed - TODO
       password: password,
     };
 
-    loginUser(userLoginPayload)
-      .unwrap()
-      .then((fulfilled) => {
-        if (fulfilled) {
-          navigation.navigate("DashboardHome", {
-            user: fulfilled,
-          });
-          resetState();
-        }
-      })
-      .catch((rejected) => {
-        resetState();
-      });
+    setVisible(true);
+
+    loginUser(userLoginDetails);
+
+    resetState();
   };
+
+  if (isSuccess) {
+    navigation.navigate("DashboardHome", {
+      user: data,
+    });
+  }
+
+  if (isError) {
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={"Error logging in, please try again!"}
+        materialCommunityIconName={"alert-circle"}
+      />
+    );
+  }
 
   return (
     <TouchableWithoutFeedback
@@ -78,13 +98,13 @@ export default function Login({ navigation }) {
         />
         <Button
           style={styles.button}
-          disabled={result.isLoading}
+          disabled={isLoading}
           mode="contained"
           onPress={loginHandler}
         >
           Login
         </Button>
-        {result.isLoading && (
+        {isLoading && (
           <ActivityIndicator
             style={styles.spinner}
             size={"large"}
@@ -92,12 +112,7 @@ export default function Login({ navigation }) {
             color={MD2Colors.deepPurple900}
           />
         )}
-        {result.isError && (
-          <DisplayMessage
-            message={"There was an error logging in, please check your details"}
-            materialCommunityIconName={"alert-circle"}
-          />
-        )}
+        {displayMessage}
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
