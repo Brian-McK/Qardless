@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { StyleSheet, Image } from "react-native";
 import { Text, Banner, MD2Colors } from "react-native-paper";
 
-export default function DisplayError({ message, materialCommunityIconName }) {
-  const [visible, setVisible] = useState(true);
+export default function DisplayMessage({
+  message,
+  materialCommunityIconName,
+  actions,
+  visible,
+}) {
+  console.log("DisplayMessage component", visible);
   return (
     <Banner
       visible={visible}
       icon={materialCommunityIconName}
-      actions={[
-        {
-          label: "Close",
-          onPress: () => setVisible(false),
-        },
-      ]}
+      actions={actions}
     >
       {message}
     </Banner>

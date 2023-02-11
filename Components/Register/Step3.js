@@ -17,12 +17,13 @@ import {
   // registerUser,
 } from "../../Redux/registerSlice";
 import { useRegisterUserMutation } from "../../Redux/api/usersApiSlice";
+import DisplayMessage from "../General/DisplayMessage";
 
 export default function Step3({ navigation }) {
   const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
-  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [
     registerUser,
     { isLoading, isError, isSuccess, isUninitialized, error },
@@ -32,13 +33,11 @@ export default function Step3({ navigation }) {
     (state) => state.register
   );
 
-  const registerEndUser = (user) => {
-    registerUser(user);
-  };
+  let displayMessage;
 
   const dispatch = useDispatch();
 
-  const submitFormData = async () => {
+  const submitFormHandler = async () => {
     dispatch(
       getStep3FormData({
         eircode,
@@ -47,7 +46,7 @@ export default function Step3({ navigation }) {
       })
     );
 
-    const userRegisterPayload = {
+    const userDetails = {
       name: `${step1FormData.firstName} ${step1FormData.surname}`,
       email: step1FormData.email,
       // email verfied and password hash need to be fixed - TODO
@@ -56,37 +55,57 @@ export default function Step3({ navigation }) {
       contactNumber: step3FormData.phone,
     };
 
-    const isFalsy = Object.values(userRegisterPayload).some((value) => {
-      if (!value) {
-        return true;
-      }
-      return false;
-    });
+    setVisible(true);
 
-    if (isFalsy) {
-      return;
-    }
-    registerEndUser(userRegisterPayload);
+    registerUser(userDetails)
+      .unwrap()
+      .then((fulfilled) => {
+        if (fulfilled) {
+          setTimeout(() => {
+            navigation.navigate("Home");
+          }, 3000);
+        }
+      })
+      .catch((rejected) => {
+        console.log(rejected);
+      });
   };
 
-  const onDismissSnackBar = () => setSnackbarVisible(false);
-
-  let snackbar;
-
   if (isSuccess) {
-    snackbar = (
-      <Snackbar
-        visible={true}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: "Login",
-          onPress: () => {
-            navigation.navigate("Home");
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
           },
-        }}
-      >
-        Successfully registered. Go to Login!
-      </Snackbar>
+          {
+            label: "Login",
+            onPress: () => navigation.navigate("Home"),
+          },
+        ]}
+        message={"Successfully registered, Go to the login screen to login!"}
+        materialCommunityIconName={"check-circle"}
+      />
+    );
+  }
+
+  if (isError) {
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={
+          "Error registering, please ensure fields are filled in correctly"
+        }
+        materialCommunityIconName={"alert-circle"}
+      />
     );
   }
 
@@ -129,14 +148,12 @@ export default function Step3({ navigation }) {
           loading={isLoading}
           disabled={isLoading}
           mode="contained"
-          onPress={() => submitFormData()}
+          onPress={() => submitFormHandler()}
         >
           Submit
         </Button>
 
-        {snackbar}
-
-        <Text>{isSuccess}</Text>
+        {displayMessage}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -153,6 +170,9 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   textInput: {
+    marginBottom: defaultMargin,
+  },
+  button: {
     marginBottom: defaultMargin,
   },
   spinner: {
