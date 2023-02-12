@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
@@ -10,10 +10,11 @@ import {
   Text,
 } from "react-native-paper";
 import { formatDate } from "../../../utils";
-
 import { useGetCertificatesByUserIdQuery } from "../../../Redux/api/certificatesApiSlice";
+import DisplayMessage from "../../General/DisplayMessage";
 
 export default function CertificatesList({ route, navigation }) {
+  const [visible, setVisible] = useState(true);
   const user = route.params.user;
 
   const {
@@ -24,6 +25,8 @@ export default function CertificatesList({ route, navigation }) {
   } = useGetCertificatesByUserIdQuery(user.id);
 
   let certItems = [];
+
+  let displayMessage;
 
   if (data) {
     certItems = data.map((item, index) => {
@@ -57,9 +60,21 @@ export default function CertificatesList({ route, navigation }) {
     });
   }
 
-  if (isError) return <Text>ERROR...</Text>;
-
-  if (isFetching && !data) return <Text>NO CERTS...</Text>;
+  if (isError) {
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={"Error loading certificate data, please try again!"}
+        materialCommunityIconName={"alert-circle"}
+      />
+    );
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -75,11 +90,7 @@ export default function CertificatesList({ route, navigation }) {
           color={MD2Colors.deepPurple900}
         />
       )}
-      {isError && (
-        <Text variant="headlineSmall" style={styles.warningMessage}>
-          Oops, something went wrong! :(
-        </Text>
-      )}
+      {displayMessage}
     </ScrollView>
   );
 }
