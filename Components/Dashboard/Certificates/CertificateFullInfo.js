@@ -1,20 +1,19 @@
-import React, { useCallback } from "react";
-import {
-  View,
-  StyleSheet,
-  Alert,
-  Linking,
-} from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, StyleSheet, Alert, Linking } from "react-native";
 import {
   MD3Colors,
+  MD2Colors,
   Button,
   Text,
   Avatar,
   Card,
   IconButton,
   Divider,
+  ActivityIndicator,
 } from "react-native-paper";
 import { formatDate } from "../../../utils";
+import { useGetBusinessByIdQuery } from "../../../Redux/api/businessesApiSlice";
+import DisplayMessage from "../../General/DisplayMessage";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="file-document" />;
 
@@ -47,7 +46,17 @@ const OpenURLButton = ({ url, children }) => {
 };
 
 export default function CertificateFullInfo({ route, navigation }) {
+  const [visible, setVisible] = useState(true);
   const { item } = route?.params || {};
+
+  let displayMessage;
+
+  const {
+    data: business,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetBusinessByIdQuery(item.businessId);
 
   let prevButtonNavigateTo = (
     <Button
@@ -65,7 +74,21 @@ export default function CertificateFullInfo({ route, navigation }) {
     </Button>
   );
 
-  // {"business": null, "businessId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "certNumber": "string", "courseDate": "2023-02-01T13:56:15.168", "courseTitle": "string", "createdDate": "2023-02-01T13:56:15.168", "endUser": null, "endUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "expiryDate": "2023-02-01T13:56:15.168", "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "pdfUrl": "string"}
+  if (isError || !item) {
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={"Error loading certificate data, please try again!"}
+        materialCommunityIconName={"alert-circle"}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -81,7 +104,8 @@ export default function CertificateFullInfo({ route, navigation }) {
             <View style={styles.certInfo}>
               <View>
                 <Text variant="titleLarge">Issued By</Text>
-                <Text variant="bodyLarge">{item.businessId}</Text>
+                {isSuccess && <Text variant="bodyLarge">{business.title}</Text>}
+                {isLoading && <Text variant="bodyLarge">loading...</Text>}
               </View>
               <Divider style={styles.divider} bold={true} />
               <View>
@@ -95,12 +119,24 @@ export default function CertificateFullInfo({ route, navigation }) {
               </View>
             </View>
             <View style={styles.certImgView}>
-              <OpenURLButton url={testSupportedURL} />
+              {!item.pdfUrl && (
+                <Text variant="bodyLarge">No cert available</Text>
+              )}
+              {item.pdfUrl && <OpenURLButton url={item.pdfUrl} />}
             </View>
           </View>
         </Card.Content>
       </Card>
       {prevButtonNavigateTo}
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.spinner}
+          size={"large"}
+          animating={true}
+          color={MD2Colors.deepPurple900}
+        />
+      )}
+      {displayMessage}
     </View>
   );
 }
@@ -126,5 +162,8 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 10,
+  },
+  spinner: {
+    margin: defaultMargin,
   },
 });
