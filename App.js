@@ -22,7 +22,9 @@ export default function App() {
             <Stack.Navigator
               initialRouteName={Home}
               screenOptions={{
-                header: (props) => <CustomNavigationBar {...props} />,
+                header: (props) => (
+                  <CustomNavigationBar {...props} title="Qardless" />
+                ),
               }}
             >
               <Stack.Screen name="Home" component={Home} />
