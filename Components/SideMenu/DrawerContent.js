@@ -3,8 +3,23 @@ import { View, StyleSheet } from "react-native";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
 import { Avatar, Title, Caption, Drawer, Switch } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useLogoutUserMutation } from "../../Redux/api/usersApiSlice";
 
 export default function DrawerContent({ user, navigation }) {
+  const [
+    logout,
+    {
+      data,
+      endpointName,
+      status,
+      isLoading,
+      isError,
+      isSuccess,
+      isUninitialized,
+      error,
+    },
+  ] = useLogoutUserMutation();
+
   const fullName = user.name;
 
   const fullNameArr = fullName.split(" ");
@@ -39,6 +54,26 @@ export default function DrawerContent({ user, navigation }) {
       />
     );
   });
+
+  const logoutHandler = async () => {
+    console.log("logout handler clicked!");
+
+    const userId = {
+      id: user.id,
+    };
+
+    logout(userId);
+  };
+
+  if (isError) {
+    console.log("error");
+    console.log(error);
+  }
+
+  if (isSuccess) {
+    console.log("success");
+    console.log(data);
+  }
 
   return (
     <DrawerContentScrollView>
@@ -75,7 +110,7 @@ export default function DrawerContent({ user, navigation }) {
               <MaterialCommunityIcons name="logout" color={color} size={size} />
             )}
             label="Logout"
-            onPress={() => {}}
+            onPress={() => logoutHandler()}
           />
         </Drawer.Section>
       </View>
