@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,24 +7,42 @@ import {
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { useReportCertificateIssueMutation } from "../../../Redux/api/certificatesApiSlice";
+import DisplayMessage from "../../General/DisplayMessage";
 
 export default function ReportCertificate({ route, navigation }) {
   const { item } = route?.params || {};
+  const [visible, setVisible] = useState(true);
   const [issue, setIssue] = useState("");
 
-  const [reportCertificateIssue, { isError, isLoading, isSuccess }] =
-    useReportCertificateIssueMutation();
+  const [
+    reportCertificateIssue,
+    { data, isError, isLoading, isSuccess, error },
+  ] = useReportCertificateIssueMutation();
 
-  const submitFormData = () => {
+  let displayMessage;
+
+  const submitFormHandler = async () => {
     if (!issue || issue == null) {
       return;
     }
     const issuePayload = {
-      type: "CertificateIssue",
-      content: `EndUser: ${"Bean Honly"}, Certificate: ${"Certificate"}, Issue: ${issue}`,
+      type: "Certificate_Issue",
+      content: `EndUser: ${item.endUserId}, Certificate: ${item.certNumber}, Issue: ${issue}`,
     };
 
+    setVisible(true);
+    setIssue("");
+
     reportCertificateIssue(issuePayload);
+  };
+
+  const successFormHandler = () => {
+    setVisible(false);
+    navigation.navigate({
+      name: "CertificateView",
+      params: item,
+      merge: true,
+    })
   };
 
   let prevButtonNavigateTo = (
@@ -44,6 +62,41 @@ export default function ReportCertificate({ route, navigation }) {
     </Button>
   );
 
+  if (isSuccess) {
+    displayMessage = (
+      <DisplayMessage
+        styleProp={styles.displayMessage}
+        visible={visible}
+        actions={[
+          {
+            label: "Return",
+            onPress: () => successFormHandler(),
+          },
+        ]}
+        message={"Report submitted, thank you!"}
+        materialCommunityIconName={"check-circle"}
+      />
+    );
+  }
+
+  if (isError) {
+    displayMessage = (
+      <DisplayMessage
+        styleProp={styles.displayMessage}
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={"Report submitted, thank you!"}
+        materialCommunityIconName={"check-circle"}
+      />
+    );
+  }
+
+
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
@@ -53,36 +106,32 @@ export default function ReportCertificate({ route, navigation }) {
         <Text style={styles.displayHeading} variant="headlineMedium">
           Report Certificate Issue
         </Text>
-        <TextInput
-          style={styles.inputField}
-          multiline={true}
-          numberOfLines={12}
-          mode="outlined"
-          label={`Enter issue for certificate ${item.certNumber}`}
-          value={issue}
-          onChangeText={(issue) => setIssue(issue)}
-        />
-        {isSuccess && (
-          <Text style={styles.successMessage} variant="headlineSmall">
-            Report Submitted
-          </Text>
+        {!isSuccess && (
+          <TextInput
+            style={styles.inputField}
+            multiline={true}
+            numberOfLines={10}
+            mode="outlined"
+            label={`Enter issue for certificate ${item.certNumber}`}
+            value={issue}
+            onChangeText={(issue) => setIssue(issue)}
+          />
         )}
-        {isError && (
-          <Text variant="headlineSmall" style={styles.warningMessage}>
-            Oops, something went wrong! :(
-          </Text>
-        )}
-        <Button
-          style={styles.button}
-          loading={isLoading}
-          disabled={isLoading}
-          mode="contained"
-          onPress={() => submitFormData()}
-        >
-          Submit Report
-        </Button>
 
-        {prevButtonNavigateTo}
+        {displayMessage}
+        {!isSuccess && (
+          <Button
+            style={styles.button}
+            loading={isLoading}
+            disabled={isSuccess || !issue}
+            mode="contained"
+            onPress={() => submitFormHandler()}
+          >
+            Submit Report
+          </Button>
+        )}
+
+        {!isSuccess && prevButtonNavigateTo}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -101,6 +150,9 @@ const styles = StyleSheet.create({
   displayHeading: {
     textAlign: "center",
   },
+  displayMessage: {
+    margin: defaultMargin,
+  },
   title: {
     margin: defaultMargin,
   },
@@ -111,7 +163,7 @@ const styles = StyleSheet.create({
     margin: defaultMargin,
   },
   button: {
-    margin: defaultMargin,
+    margin: defaultMargin - 5,
   },
   spinner: {
     margin: defaultMargin,

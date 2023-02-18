@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const certificatesApiSlice = createApi({
   reducerPath: "certificatesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://qardlessapi.azurewebsites.net/api/",
+    baseUrl: "https://7427-80-233-61-249.eu.ngrok.io/",
   }),
   tagTypes: ["Certificates"],
   endpoints: (builder) => ({
@@ -22,7 +22,7 @@ export const certificatesApiSlice = createApi({
     }),
     reportCertificateIssue: builder.mutation({
       query: (body) => ({
-        url: "Changelogs",
+        url: "changelogs",
         method: "POST",
         body
       }),

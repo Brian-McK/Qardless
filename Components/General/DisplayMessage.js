@@ -7,9 +7,11 @@ export default function DisplayMessage({
   materialCommunityIconName,
   actions,
   visible,
+  styleProp
 }) {
   return (
     <Banner
+      style={styleProp}
       visible={visible}
       icon={materialCommunityIconName}
       actions={actions}

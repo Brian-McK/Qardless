@@ -29,7 +29,7 @@ const OpenURLButton = ({ url, children }) => {
     if (supported) {
       await Linking.openURL(url);
     } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
+      Alert.alert(`Invalid URL: ${url}`);
     }
   }, [url]);
 

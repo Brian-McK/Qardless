@@ -4,16 +4,16 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const businessesApiSlice = createApi({
   reducerPath: "businessesApiSlice",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://qardlessapi.azurewebsites.net/api/",
+    baseUrl: "https://7427-80-233-61-249.eu.ngrok.io/",
   }),
   tagTypes: ["Businesses"],
   endpoints: (builder) => ({
     getBusinesses: builder.query({
-      query: () => `Businesses`,
+      query: () => `businesses`,
       providesTags: ["Businesses"],
     }),
     getBusinessById: builder.query({
-      query: (id) => `Businesses/${id}/`,
+      query: (id) => `businesses/${id}/`,
       providesTags: ["Businesses"],
     }),
   }),

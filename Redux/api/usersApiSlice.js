@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const usersApiSlice = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://fa62-80-233-32-236.eu.ngrok.io/api/",
+    baseUrl: "https://7427-80-233-61-249.eu.ngrok.io/",
   }),
   tagTypes: ["Endusers"],
   endpoints: (builder) => ({
@@ -14,7 +14,7 @@ export const usersApiSlice = createApi({
     }),
     loginUser: builder.mutation({
       query: (body) => ({
-        url: "login",
+        url: "endusers/login",
         method: "POST",
         body,
       }),

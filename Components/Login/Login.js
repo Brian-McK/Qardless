@@ -39,6 +39,8 @@ export default function Login({ navigation }) {
       password: password,
     };
 
+    console.log(userLoginDetails);
+
     setVisible(true);
 
     loginUser(userLoginDetails);

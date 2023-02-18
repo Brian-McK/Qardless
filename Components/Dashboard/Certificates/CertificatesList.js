@@ -19,6 +19,8 @@ export default function CertificatesList({ route, navigation }) {
 
   const {
     data = [],
+    isSuccess,
+    isUninitialized,
     isLoading,
     isError,
     isFetching,
@@ -28,7 +30,7 @@ export default function CertificatesList({ route, navigation }) {
 
   let displayMessage;
 
-  if (data) {
+  if (data.length > 0) {
     certItems = data.map((item, index) => {
       return (
         <TouchableRipple
