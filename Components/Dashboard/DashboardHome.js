@@ -1,21 +1,34 @@
-import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
-import { useEffect, useLayoutEffect } from "react";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+  BackHandler,
+} from "react-native";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RootNavigator from "../SideMenu/RootNavigator";
 
 export default function DashboardHome({ route, navigation }) {
+  const [logoutRequested, setLogoutRequested] = useState(false);
+
   const { user } = route?.params || {};
 
-  useLayoutEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
+  const logoutRequestCallback = (request) => {
+    setLogoutRequested(request);
+  };
 
-  // prevent going back to the login screen with navigation - TODO - need to fix further down the line - https://reactnavigation.org/docs/preventing-going-back/
+  if (logoutRequested) {
+    navigation.navigate("Home");
+  }
+
+  // disable the back button in this screen
   useEffect(() => {
-    navigation.addListener("beforeRemove", (e) => {
-      e.preventDefault();
-    });
-  }, [navigation]);
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => true
+    );
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <TouchableWithoutFeedback
@@ -23,7 +36,12 @@ export default function DashboardHome({ route, navigation }) {
       accessible={false}
     >
       <SafeAreaView style={styles.container}>
-        <RootNavigator navigation={navigation} user={user} />
+        <RootNavigator
+          navigation={navigation}
+          route={route}
+          user={user}
+          logoutRequestCallbackToHome={logoutRequestCallback}
+        />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

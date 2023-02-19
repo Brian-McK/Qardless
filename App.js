@@ -20,7 +20,7 @@ export default function App() {
         <NavigationContainer>
           <SafeAreaView style={styles.container}>
             <Stack.Navigator
-              initialRouteName={Home}
+              initialRouteName="Home"
               screenOptions={{
                 header: (props) => (
                   <CustomNavigationBar {...props} title="Qardless" />
@@ -30,7 +30,11 @@ export default function App() {
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="Register" component={Register} />
               <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="DashboardHome" component={DashboardHome} />
+              <Stack.Screen
+                name="DashboardHome"
+                options={{ headerShown: false }}
+                component={DashboardHome}
+              />
             </Stack.Navigator>
           </SafeAreaView>
         </NavigationContainer>

@@ -1,23 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
 import { Avatar, Title, Caption, Drawer, Switch } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLogoutUserMutation } from "../../Redux/api/usersApiSlice";
+import { DrawerActions } from "@react-navigation/native";
 
-export default function DrawerContent({ user, navigation }) {
+export default function DrawerContent({
+  user,
+  navigation,
+  logoutRequestCallbackToRootNav,
+}) {
   const [
     logout,
-    {
-      data,
-      endpointName,
-      status,
-      isLoading,
-      isError,
-      isSuccess,
-      isUninitialized,
-      error,
-    },
+    { data, status, isLoading, isError, isSuccess, isUninitialized, error },
   ] = useLogoutUserMutation();
 
   const fullName = user.name;
@@ -56,8 +52,6 @@ export default function DrawerContent({ user, navigation }) {
   });
 
   const logoutHandler = async () => {
-    console.log("logout handler clicked!");
-
     const userId = {
       id: user.id,
     };
@@ -66,13 +60,13 @@ export default function DrawerContent({ user, navigation }) {
   };
 
   if (isError) {
-    console.log("error");
     console.log(error);
   }
 
   if (isSuccess) {
-    console.log("success");
-    console.log(data);
+    if (data.isLoggedIn === false) {
+      logoutRequestCallbackToRootNav(true);
+    }
   }
 
   return (

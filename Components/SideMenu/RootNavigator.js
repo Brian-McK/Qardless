@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DrawerContent from "./DrawerContent";
 import QRScanner from "../Dashboard/QRScanner";
@@ -7,11 +7,27 @@ import Certificates from "../Dashboard/Certificates/Certificates";
 
 const Drawer = createDrawerNavigator();
 
-export default function RootNavigator({ user, navigation }) {
+export default function RootNavigator({
+  user,
+  navigation,
+  logoutRequestCallbackToHome,
+}) {
+  const [logoutRequested, setLogoutRequested] = useState(false);
+
+  const logoutRequestCallback = (request) => {
+    setLogoutRequested(request);
+
+    logoutRequestCallbackToHome(logoutRequested);
+  };
+
   return (
     <Drawer.Navigator
       drawerContent={() => (
-        <DrawerContent user={user} navigation={navigation} />
+        <DrawerContent
+          user={user}
+          navigation={navigation}
+          logoutRequestCallbackToRootNav={logoutRequestCallback}
+        />
       )}
     >
       <Drawer.Screen

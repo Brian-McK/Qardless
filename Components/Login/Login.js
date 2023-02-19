@@ -1,8 +1,4 @@
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useState } from "react";
 import {
   MD2Colors,
@@ -19,10 +15,8 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(true);
-  const [
-    loginUser,
-    { data, isLoading, isError, isSuccess },
-  ] = useLoginUserMutation();
+  const [loginUser, { data, isLoading, isError, isSuccess }] =
+    useLoginUserMutation();
 
   let displayMessage;
 
@@ -38,8 +32,6 @@ export default function Login({ navigation }) {
       // email verfied and password hash need to be fixed - TODO
       password: password,
     };
-
-    console.log(userLoginDetails);
 
     setVisible(true);
 
