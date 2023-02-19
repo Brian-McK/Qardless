@@ -41,8 +41,7 @@ export default function Step3({ navigation }) {
       name: `${step1FormData.firstName} ${step1FormData.surname}`,
       email: step1FormData.email,
       // email verfied and password hash need to be fixed - TODO
-      emailVerified: true,
-      passwordHash: step3FormData.password,
+      password: step3FormData.password,
       contactNumber: step3FormData.phone,
     };
 
