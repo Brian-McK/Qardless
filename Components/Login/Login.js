@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MD2Colors,
   Text,
@@ -36,15 +36,16 @@ export default function Login({ navigation }) {
     setVisible(true);
 
     loginUser(userLoginDetails);
-
-    resetState();
   };
 
-  if (isSuccess) {
-    navigation.navigate("DashboardHome", {
-      user: data,
-    });
-  }
+  useEffect(() => {
+    if (isSuccess == true) {
+      resetState();
+      navigation.navigate("DashboardHome", {
+        user: data,
+      });
+    }
+  }, [isSuccess]);
 
   if (isError) {
     displayMessage = (

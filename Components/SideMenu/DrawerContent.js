@@ -29,7 +29,6 @@ export default function DrawerContent({
   }
 
   const navItems = [
-    { name: "Home", iconName: "home" },
     { name: "Certificates", iconName: "file-document" },
     { name: "QR Scanner", iconName: "barcode" },
   ];
