@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const usersApiSlice = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://2e5e-80-233-61-249.eu.ngrok.io/",
+    baseUrl: "https://8ece-80-233-40-141.eu.ngrok.io/",
   }),
   tagTypes: ["Endusers"],
   endpoints: (builder) => ({
@@ -28,14 +28,6 @@ export const usersApiSlice = createApi({
       }),
       invalidatesTags: ["Endusers"],
     }),
-    // logoutUser: builder.mutation({
-    //   query: (body) => ({
-    //     url: "logout",
-    //     method: "PUT",
-    //     body
-    //   }),
-    //   invalidatesTags: ["Endusers"],
-    // }),
     registerUser: builder.mutation({
       query: (body) => ({
         url: "endusers",

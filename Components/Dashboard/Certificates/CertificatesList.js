@@ -30,6 +30,8 @@ export default function CertificatesList({ route, navigation }) {
 
   let displayMessage;
 
+  console.log(JSON.stringify(data, null, 2));
+
   if (data.length > 0) {
     certItems = data.map((item, index) => {
       return (
@@ -40,7 +42,7 @@ export default function CertificatesList({ route, navigation }) {
         >
           <List.Item
             key={index}
-            title={item.courseTitle}
+            title={item.courseId} // course title will go here
             description={`Awarded: ${formatDate(
               item.createdDate
             )} Ends: ${formatDate(item.expiryDate)}`}
