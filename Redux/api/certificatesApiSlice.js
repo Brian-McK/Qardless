@@ -22,7 +22,7 @@ export const certificatesApiSlice = createApi({
     }),
     reportCertificateIssue: builder.mutation({
       query: (body) => ({
-        url: "changelogs",
+        url: "flaggedissues",
         method: "POST",
         body
       }),
