@@ -17,9 +17,11 @@ export default function DashboardHome({ route, navigation }) {
     setLogoutRequested(request);
   };
 
-  if (logoutRequested) {
-    navigation.navigate("Home");
-  }
+  useEffect(() => {
+    if (logoutRequested == true) {
+      navigation.navigate("Home");
+    }
+  }, [logoutRequested]);
 
   // disable the back button in this screen
   useEffect(() => {
