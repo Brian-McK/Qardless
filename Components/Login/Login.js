@@ -1,67 +1,67 @@
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useState, useEffect } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
-  ProgressBar,
-  MD3Colors,
+  MD2Colors,
   Text,
   Button,
   TextInput,
+  ActivityIndicator,
 } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector, useDispatch } from "react-redux";
 import { useLoginUserMutation } from "../../Redux/api/usersApiSlice";
+import DisplayMessage from "../General/DisplayMessage";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [loginUser, { isLoading, isError, isSuccess, isUninitialized, error }] =
+  const [visible, setVisible] = useState(true);
+  const [loginUser, { data, isLoading, isError, isSuccess }] =
     useLoginUserMutation();
 
-  // commented out to replicate going to the menu screen - TODO
-  // const loginEndUser = (loginDetails) => {
-  //   console.log("loginEndUser: ");
-  //   console.log(loginDetails);
+  let displayMessage;
 
-  //   loginUser(loginDetails);
-  // };
+  // reset to initial state
+  const resetState = () => {
+    setEmail("");
+    setPassword("");
+  };
 
-  const submitFormData = async () => {
-    const userLoginPayload = {
+  const loginHandler = async () => {
+    const userLoginDetails = {
       email: email,
       // email verfied and password hash need to be fixed - TODO
-      emailVerified: true,
-      passwordHash: password,
+      password: password,
     };
 
-    // commented out to replicate going to the menu screen - TODO
-    // const isFalsy = Object.values(userLoginPayload).some((value) => {
-    //   if (!value) {
-    //     return true;
-    //   }
-    //   return false;
-    // });
+    setVisible(true);
 
-    // if (isFalsy) {
-    //   return;
-    // }
-
-    // commented out to replicate going to the menu screen - TODO
-    // loginEndUser(userRegisterPayload);
-
-    console.log("!!", isLoading, isError, isSuccess, isUninitialized, error);
-
-    navigation.navigate("DashboardHome");
+    loginUser(userLoginDetails);
   };
 
   useEffect(() => {
-    console.log("Login screen loaded");
-  }, []);
+    if (isSuccess == true) {
+      resetState();
+      navigation.navigate("DashboardHome", {
+        user: data,
+      });
+    }
+  }, [isSuccess]);
+
+  if (isError) {
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={"Error logging in, please try again!"}
+        materialCommunityIconName={"alert-circle"}
+      />
+    );
+  }
 
   return (
     <TouchableWithoutFeedback
@@ -84,15 +84,26 @@ export default function Login({ navigation }) {
           mode="outlined"
           label="Password"
           value={password}
+          secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
         <Button
           style={styles.button}
+          disabled={isLoading}
           mode="contained"
-          onPress={() => submitFormData()}
+          onPress={loginHandler}
         >
           Login
         </Button>
+        {isLoading && (
+          <ActivityIndicator
+            style={styles.spinner}
+            size={"large"}
+            animating={true}
+            color={MD2Colors.deepPurple900}
+          />
+        )}
+        {displayMessage}
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -117,5 +128,8 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: defaultMargin,
+  },
+  spinner: {
+    margin: defaultMargin,
   },
 });

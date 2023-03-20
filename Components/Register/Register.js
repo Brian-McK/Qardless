@@ -1,4 +1,8 @@
-import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ProgressBar, MD3Colors, Text, Button } from "react-native-paper";
@@ -6,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 

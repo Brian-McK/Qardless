@@ -1,25 +1,35 @@
 import {
   StyleSheet,
-  View,
   TouchableWithoutFeedback,
   Keyboard,
+  BackHandler,
 } from "react-native";
-import { useState, useEffect } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  ProgressBar,
-  MD3Colors,
-  Text,
-  Button,
-  TextInput,
-} from "react-native-paper";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector, useDispatch } from "react-redux";
 import RootNavigator from "../SideMenu/RootNavigator";
 
-export default function DashboardHome({ navigation }) {
+export default function DashboardHome({ route, navigation }) {
+  const [logoutRequested, setLogoutRequested] = useState(false);
+
+  const { user } = route?.params || {};
+
+  const logoutRequestCallback = (request) => {
+    setLogoutRequested(request);
+  };
+
   useEffect(() => {
-    console.log("Dashboard screen loaded");
+    if (logoutRequested == true) {
+      navigation.navigate("Home");
+    }
+  }, [logoutRequested]);
+
+  // disable the back button in this screen
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => true
+    );
+    return () => backHandler.remove();
   }, []);
 
   return (
@@ -28,7 +38,12 @@ export default function DashboardHome({ navigation }) {
       accessible={false}
     >
       <SafeAreaView style={styles.container}>
-        <RootNavigator navigation={navigation}/>
+        <RootNavigator
+          navigation={navigation}
+          route={route}
+          user={user}
+          logoutRequestCallbackToHome={logoutRequestCallback}
+        />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

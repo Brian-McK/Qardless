@@ -1,19 +1,12 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  List,
-  MD2Colors,
-  MD3Colors,
-  TouchableRipple,
-  Button,
-  Text,
-} from "react-native-paper";
+import { View, StyleSheet } from "react-native";
+import { Button } from "react-native-paper";
 import QRCodeDisplay from "./QRCodeDisplay";
 
 export default function CertificateView({ route, navigation }) {
   const { item } = route?.params || {};
+
+  console.log(item);
 
   let prevButtonNavigateTo = (
     <Button

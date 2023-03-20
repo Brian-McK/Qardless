@@ -1,13 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  List,
-  MD2Colors,
-  MD3Colors,
-  TouchableRipple,
-} from "react-native-paper";
+import { StyleSheet } from "react-native";
 import CertificateView from "./CertificateView";
 import CertificatesList from "./CertificatesList";
 import CertificateFullInfo from "./CertificateFullInfo";
@@ -16,7 +8,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
-export default function Certificates({ navigation }) {
+export default function Certificates({ route, navigation }) {
+  const user = route.params.user;
+
   return (
     <Stack.Navigator
       initialRouteName={CertificatesList}
@@ -26,6 +20,8 @@ export default function Certificates({ navigation }) {
     >
       <Stack.Screen
         name="CertificatesList"
+        user={user}
+        initialParams={{ user }}
         navigation={navigation}
         component={CertificatesList}
       />

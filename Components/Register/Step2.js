@@ -3,12 +3,7 @@ import { useState, useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import {
-  currentStep,
-  resetCurrentStep,
-  getStep2FormData,
-  resetStep2FormData,
-} from "../../Redux/registerSlice";
+import { currentStep, getStep2FormData } from "../../Redux/registerSlice";
 
 export default function Step2() {
   const [address1, setAddress1] = useState();
@@ -34,7 +29,6 @@ export default function Step2() {
 
   useFocusEffect(
     useCallback(() => {
-      console.log("Loaded 2");
       dispatch(currentStep(2));
     }, [dispatch, currentStep])
   );

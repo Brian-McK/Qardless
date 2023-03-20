@@ -1,31 +1,24 @@
-import React, { useCallback } from "react";
+import React, { useState, useCallback } from "react";
+import { View, StyleSheet, Alert, Linking } from "react-native";
 import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  Alert,
-  Linking,
-} from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  List,
-  MD2Colors,
   MD3Colors,
-  TouchableRipple,
+  MD2Colors,
   Button,
   Text,
   Avatar,
   Card,
   IconButton,
   Divider,
+  ActivityIndicator,
 } from "react-native-paper";
+import { formatDate } from "../../../utils";
+import { useGetBusinessByIdQuery } from "../../../Redux/api/businessesApiSlice";
+import DisplayMessage from "../../General/DisplayMessage";
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="file-document" />;
 
-const testSupportedURL = "https://s2.q4cdn.com/175719177/files/doc_presentations/Placeholder-PDF.pdf";
+const testSupportedURL =
+  "https://qardlesspdfs.blob.core.windows.net/pdfs/BeanHonlyForkLift.pdf";
 
 const testUnsupportedURL = "slack://open?team=123456";
 
@@ -36,7 +29,7 @@ const OpenURLButton = ({ url, children }) => {
     if (supported) {
       await Linking.openURL(url);
     } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
+      Alert.alert(`Invalid URL: ${url}`);
     }
   }, [url]);
 
@@ -53,7 +46,17 @@ const OpenURLButton = ({ url, children }) => {
 };
 
 export default function CertificateFullInfo({ route, navigation }) {
+  const [visible, setVisible] = useState(true);
   const { item } = route?.params || {};
+
+  let displayMessage;
+
+  const {
+    data: business,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetBusinessByIdQuery(item.businessId);
 
   let prevButtonNavigateTo = (
     <Button
@@ -71,24 +74,29 @@ export default function CertificateFullInfo({ route, navigation }) {
     </Button>
   );
 
-  // Id: "12345",
-  // Title: "Dummy Certificate",
-  // QrCodeUri: "12345",
-  // PdfUri: "12345",
-  // SerialNumber: "12345",
-  // Expires: true,
-  // CreatedDate: "01/01/2023",
-  // ExpiryDate: "01/01/2024",
-  // EndUserId: "12345",
-  // BusinessId: "12345",
+  if (isError || !item) {
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={"Error loading certificate data, please try again!"}
+        materialCommunityIconName={"alert-circle"}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
       <Card>
         <Card.Title
-          title={item.Title}
+          title={item.courseTitle}
           titleVariant={"titleLarge"}
-          subtitle={`Serial Number: ${item.SerialNumber}`}
+          subtitle={`Serial Number: ${item.certNumber}`}
           left={LeftContent}
         />
         <Card.Content>
@@ -96,26 +104,39 @@ export default function CertificateFullInfo({ route, navigation }) {
             <View style={styles.certInfo}>
               <View>
                 <Text variant="titleLarge">Issued By</Text>
-                <Text variant="bodyLarge">{item.BusinessId}</Text>
+                {isSuccess && <Text variant="bodyLarge">{business.title}</Text>}
+                {isLoading && <Text variant="bodyLarge">loading...</Text>}
               </View>
               <Divider style={styles.divider} bold={true} />
               <View>
                 <Text variant="titleLarge">Date Issued</Text>
-                <Text variant="bodyLarge">{item.CreatedDate}</Text>
+                <Text variant="bodyLarge">{formatDate(item.createdDate)}</Text>
               </View>
               <Divider style={styles.divider} bold={true} />
               <View>
                 <Text variant="titleLarge">Date Expires</Text>
-                <Text variant="bodyLarge">{item.CreatedDate}</Text>
+                <Text variant="bodyLarge">{formatDate(item.expiryDate)}</Text>
               </View>
             </View>
             <View style={styles.certImgView}>
-              <OpenURLButton url={testSupportedURL} />
+              {!item.pdfUrl && (
+                <Text variant="bodyLarge">No cert available</Text>
+              )}
+              {item.pdfUrl && <OpenURLButton url={item.pdfUrl} />}
             </View>
           </View>
         </Card.Content>
       </Card>
       {prevButtonNavigateTo}
+      {isLoading && (
+        <ActivityIndicator
+          style={styles.spinner}
+          size={"large"}
+          animating={true}
+          color={MD2Colors.deepPurple900}
+        />
+      )}
+      {displayMessage}
     </View>
   );
 }
@@ -132,11 +153,17 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: defaultPadding,
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-around",
     alignItems: "center",
   },
-  certInfo: {},
+  certInfo: {
+    marginBottom: defaultMargin,
+  },
   divider: {
     marginVertical: 10,
+  },
+  spinner: {
+    margin: defaultMargin,
   },
 });

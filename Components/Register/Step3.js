@@ -1,49 +1,34 @@
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { useState, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useState, useCallback } from "react";
 import {
-  ScrollView,
   StyleSheet,
-  Text,
   View,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { TextInput, Button, Snackbar, MD2Colors } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currentStep,
-  getStep3FormData,
-  isLoading,
-  // registerUser,
-} from "../../Redux/registerSlice";
-import {
-  useRegisterUserMutation,
-} from "../../Redux/api/usersApiSlice";
+import { currentStep, getStep3FormData } from "../../Redux/registerSlice";
+import { useRegisterUserMutation } from "../../Redux/api/usersApiSlice";
+import DisplayMessage from "../General/DisplayMessage";
 
 export default function Step3({ navigation }) {
   const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
-  const [snackbarVisible, setSnackbarVisible] = useState(false);
-  const [
-    registerUser,
-    { isLoading, isError, isSuccess, isUninitialized, error },
-  ] = useRegisterUserMutation();
+  const [visible, setVisible] = useState(true);
+  const [registerUser, { isLoading, isError, isSuccess }] =
+    useRegisterUserMutation();
 
-  const { step1FormData, step2FormData, step3FormData, user } = useSelector(
+  const { step1FormData, step3FormData } = useSelector(
     (state) => state.register
   );
 
-  const registerEndUser = (user) => {
-    console.log("registerEndUser: ");
-    console.log(user);
-
-    registerUser(user);
-  };
+  let displayMessage;
 
   const dispatch = useDispatch();
 
-  const submitFormData = async () => {
+  const submitFormHandler = async () => {
     dispatch(
       getStep3FormData({
         eircode,
@@ -52,58 +37,61 @@ export default function Step3({ navigation }) {
       })
     );
 
-    const userRegisterPayload = {
-      firstName: step1FormData.firstName,
-      lastName: step1FormData.surname,
+    const userDetails = {
+      name: `${step1FormData.firstName} ${step1FormData.surname}`,
       email: step1FormData.email,
       // email verfied and password hash need to be fixed - TODO
-      emailVerified: true,
-      passwordHash: step3FormData.password,
-      phoneMobile: step3FormData.phone,
-      AddressCode: step3FormData.eircode,
-      AddressDetailed: `${step2FormData.address1}, ${step2FormData.address2}, ${step2FormData.county}`,
+      password: step3FormData.password,
+      contactNumber: step3FormData.phone,
     };
 
-    const isFalsy = Object.values(userRegisterPayload).some((value) => {
-      if (!value) {
-        return true;
-      }
-      return false;
-    });
+    setVisible(true);
 
-    if (isFalsy) {
-      return;
-    }
-
-    registerEndUser(userRegisterPayload);
-
-    console.log("!!", isLoading, isError, isSuccess, isUninitialized, error);
+    registerUser(userDetails);
   };
 
-  const onDismissSnackBar = () => setSnackbarVisible(false);
-
-  let snackbar;
-
   if (isSuccess) {
-    snackbar = (
-      <Snackbar
-        visible={true}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: "Login",
-          onPress: () => {
-            navigation.navigate("Home");
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
           },
-        }}
-      >
-        Successfully registered. Go to Login!
-      </Snackbar>
+          {
+            label: "Login",
+            onPress: () => {
+              navigation.navigate("Home");
+            },
+          },
+        ]}
+        message={"Successfully registered, Go to the login screen to login!"}
+        materialCommunityIconName={"check-circle"}
+      />
+    );
+  }
+
+  if (isError) {
+    displayMessage = (
+      <DisplayMessage
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={
+          "Error registering, please ensure fields are filled in correctly"
+        }
+        materialCommunityIconName={"alert-circle"}
+      />
     );
   }
 
   useFocusEffect(
     useCallback(() => {
-      console.log("Loaded 3");
       dispatch(currentStep(3));
     }, [dispatch, currentStep])
   );
@@ -133,6 +121,7 @@ export default function Step3({ navigation }) {
           mode="outlined"
           label="Password"
           value={password}
+          secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
         <Button
@@ -140,14 +129,12 @@ export default function Step3({ navigation }) {
           loading={isLoading}
           disabled={isLoading}
           mode="contained"
-          onPress={() => submitFormData()}
+          onPress={() => submitFormHandler()}
         >
           Submit
         </Button>
 
-        {snackbar}
-
-        <Text>{isSuccess}</Text>
+        {displayMessage}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -164,6 +151,9 @@ const styles = StyleSheet.create({
     padding: defaultPadding,
   },
   textInput: {
+    marginBottom: defaultMargin,
+  },
+  button: {
     marginBottom: defaultMargin,
   },
   spinner: {

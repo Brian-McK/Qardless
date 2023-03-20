@@ -1,43 +1,55 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  Alert,
-  Linking,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import {
-  List,
-  MD2Colors,
-  MD3Colors,
-  TouchableRipple,
-  Button,
-  Text,
-  Avatar,
-  Card,
-  IconButton,
-  Divider,
-  TextInput,
-} from "react-native-paper";
+import { Button, Text, TextInput } from "react-native-paper";
+import { useReportCertificateIssueMutation } from "../../../Redux/api/certificatesApiSlice";
+import DisplayMessage from "../../General/DisplayMessage";
 
 export default function ReportCertificate({ route, navigation }) {
   const { item } = route?.params || {};
-  const [issue, setIssue] = useState();
+  const [visible, setVisible] = useState(true);
+  const [issue, setIssue] = useState("");
 
-  const submitFormData = async () => {
-    console.log("!! Submit Report Certificate");
+  const [
+    reportCertificateIssue,
+    { data, isError, isLoading, isSuccess, error },
+  ] = useReportCertificateIssueMutation();
+
+  let displayMessage;
+
+  const submitFormHandler = async () => {
+    if (!issue || issue == null) {
+      return;
+    }
+    const issuePayload = {
+      type: "Certificate_Issue",
+      content: `EndUser: ${item.endUserId}, Certificate: ${item.certNumber}, Issue: ${issue}`,
+    };
+
+    setVisible(true);
+    setIssue("");
+
+    reportCertificateIssue(issuePayload);
+  };
+
+  const successFormHandler = () => {
+    setVisible(false);
+    navigation.navigate({
+      name: "CertificateView",
+      params: item,
+      merge: true,
+    })
   };
 
   let prevButtonNavigateTo = (
     <Button
       style={styles.button}
       mode="contained"
+      disabled={isLoading}
       onPress={() =>
         navigation.navigate({
           name: "CertificateView",
@@ -50,16 +62,40 @@ export default function ReportCertificate({ route, navigation }) {
     </Button>
   );
 
-  // Id: "12345",
-  // Title: "Dummy Certificate",
-  // QrCodeUri: "12345",
-  // PdfUri: "12345",
-  // SerialNumber: "12345",
-  // Expires: true,
-  // CreatedDate: "01/01/2023",
-  // ExpiryDate: "01/01/2024",
-  // EndUserId: "12345",
-  // BusinessId: "12345",
+  if (isSuccess) {
+    displayMessage = (
+      <DisplayMessage
+        styleProp={styles.displayMessage}
+        visible={visible}
+        actions={[
+          {
+            label: "Return",
+            onPress: () => successFormHandler(),
+          },
+        ]}
+        message={"Report submitted, thank you!"}
+        materialCommunityIconName={"check-circle"}
+      />
+    );
+  }
+
+  if (isError) {
+    displayMessage = (
+      <DisplayMessage
+        styleProp={styles.displayMessage}
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        message={"Report submitted, thank you!"}
+        materialCommunityIconName={"check-circle"}
+      />
+    );
+  }
+
 
   return (
     <TouchableWithoutFeedback
@@ -70,24 +106,32 @@ export default function ReportCertificate({ route, navigation }) {
         <Text style={styles.displayHeading} variant="headlineMedium">
           Report Certificate Issue
         </Text>
-        <TextInput
-          style={styles.inputField}
-          multiline={true}
-          numberOfLines={12}
-          mode="outlined"
-          label="Enter issue here..."
-          value={issue}
-          onChangeText={(issue) => setIssue(issue)}
-        />
-        <Button
-          style={styles.button}
-          mode="contained"
-          onPress={() => submitFormData()}
-        >
-          Submit Report
-        </Button>
+        {!isSuccess && (
+          <TextInput
+            style={styles.inputField}
+            multiline={true}
+            numberOfLines={10}
+            mode="outlined"
+            label={`Enter issue for certificate ${item.certNumber}`}
+            value={issue}
+            onChangeText={(issue) => setIssue(issue)}
+          />
+        )}
 
-        {prevButtonNavigateTo}
+        {displayMessage}
+        {!isSuccess && (
+          <Button
+            style={styles.button}
+            loading={isLoading}
+            disabled={isSuccess || !issue}
+            mode="contained"
+            onPress={() => submitFormHandler()}
+          >
+            Submit Report
+          </Button>
+        )}
+
+        {!isSuccess && prevButtonNavigateTo}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -106,14 +150,20 @@ const styles = StyleSheet.create({
   displayHeading: {
     textAlign: "center",
   },
+  displayMessage: {
+    margin: defaultMargin,
+  },
   title: {
     margin: defaultMargin,
+  },
+  successMessage: {
+    textAlign: "center",
   },
   inputField: {
     margin: defaultMargin,
   },
   button: {
-    margin: defaultMargin,
+    margin: defaultMargin - 5,
   },
   spinner: {
     margin: defaultMargin,

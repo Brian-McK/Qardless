@@ -1,28 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
-import {
-  useTheme,
-  Avatar,
-  Title,
-  Caption,
-  Paragraph,
-  Drawer,
-  Text,
-  TouchableRipple,
-  Switch,
-} from "react-native-paper";
+import { Avatar, Title, Caption, Drawer, Switch } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useLogoutUserMutation } from "../../Redux/api/usersApiSlice";
+import { DrawerActions } from "@react-navigation/native";
 
-export default function DrawerContent(props) {
-  const fullName = "Brian McKenna";
+export default function DrawerContent({
+  user,
+  navigation,
+  logoutRequestCallbackToRootNav,
+}) {
+  const [
+    logout,
+    { data, status, isLoading, isError, isSuccess, isUninitialized, error },
+  ] = useLogoutUserMutation();
+
+  const fullName = user.name;
 
   const fullNameArr = fullName.split(" ");
 
-  const initials = fullNameArr.shift().charAt(0) + fullNameArr.pop().charAt(0);
+  let initials = null;
+
+  if (fullNameArr.length > 1) {
+    initials = fullNameArr.shift().charAt(0) + fullNameArr.pop().charAt(0);
+  } else {
+    initials = fullName.charAt(0);
+  }
 
   const navItems = [
-    { name: "Home", iconName: "home" },
     { name: "Certificates", iconName: "file-document" },
     { name: "QR Scanner", iconName: "barcode" },
   ];
@@ -39,18 +45,36 @@ export default function DrawerContent(props) {
           />
         )}
         label={item.name}
-        onPress={() => props.navigation.navigate(item.name)}
+        onPress={() => navigation.navigate(item.name)}
       />
     );
   });
 
+  const logoutHandler = async () => {
+    const userId = {
+      id: user.id,
+    };
+
+    logout(userId);
+  };
+
+  if (isError) {
+    console.log(error);
+  }
+
+  if (isSuccess) {
+    if (data.isLoggedIn === false) {
+      logoutRequestCallbackToRootNav(true);
+    }
+  }
+
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView>
       <View style={styles.drawerContent}>
         <View style={styles.userInfoSection}>
           <Avatar.Text label={initials} size={50} />
           <Title style={styles.title}>{fullName}</Title>
-          <Caption style={styles.caption}>brian@gmail.com</Caption>
+          <Caption style={styles.caption}>{user.email}</Caption>
         </View>
         <Drawer.Section style={styles.drawerSection}>
           {drawerItems}
@@ -79,7 +103,7 @@ export default function DrawerContent(props) {
               <MaterialCommunityIcons name="logout" color={color} size={size} />
             )}
             label="Logout"
-            onPress={() => {}}
+            onPress={() => logoutHandler()}
           />
         </Drawer.Section>
       </View>

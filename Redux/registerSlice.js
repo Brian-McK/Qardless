@@ -1,7 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { Axios } from "axios";
-
-const API_URL = "https://9e3d-64-43-50-159.eu.ngrok.io/api/enduser";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   formStepNumber: 0,
@@ -26,34 +23,6 @@ const initialState = {
   error: null,
 };
 
-// export const registerUser = createAsyncThunk(
-//   "register/registerUser",
-//   async (payload) => {
-//     try {
-//       const response = await axios.post(API_URL, payload);
-//       return response.data;
-//     } catch (err) {
-//       console.log(err.message)
-//     }
-//   }
-// );
-
-export const registerUser = createAsyncThunk(
-  "register/registerUser",
-  async (payload) => {
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
-      return data;
-    } catch (err) {
-      // You can choose to use the message attached to err or write a custom error
-      return rejectWithValue("Opps there seems to be an error");
-    }
-  }
-);
 
 export const counterSlice = createSlice({
   name: "register",
@@ -83,27 +52,6 @@ export const counterSlice = createSlice({
     resetStep3FormData: (state, action) => {
       return initialState;
     },
-  },
-  extraReducers(builder) {
-    // listening for the promise status action types
-    builder
-      .addCase(registerUser.pending, (state, action) => {
-        state.isLoading = true;
-        state.error = false;
-        console.log("pending...")
-      })
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = false;
-        state.registeredUsers.unshift(action.payload);
-        console.log("fulfilled...")
-        
-      })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = true;
-        console.log("rejected...")
-      });
   },
 });
 
