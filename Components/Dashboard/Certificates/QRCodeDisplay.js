@@ -8,11 +8,13 @@ import QRCertOptions from "./QRCertOptions";
 export default function QRCodeDisplay(props) {
   const { item } = props;
 
+  console.log(JSON.stringify(item, null, 2));
+
   return (
     <View style={styles.container}>
       <Surface style={styles.surface} elevation={1}>
         <Text variant="headlineSmall" style={styles.title}>
-          {item.courseTitle}
+          {item.course.title}
         </Text>
 
         <Image
@@ -21,6 +23,9 @@ export default function QRCodeDisplay(props) {
         />
 
         <QRCertOptions navigation={props.navigation} item={item} />
+        <Text variant="titleSmall" style={styles.title}>
+          Status:  {item.isFrozen ? "Frozen" : "Active" }
+        </Text>
       </Surface>
     </View>
   );

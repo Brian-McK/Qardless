@@ -42,10 +42,10 @@ export default function CertificatesList({ route, navigation }) {
         >
           <List.Item
             key={index}
-            title={item.courseId} // course title will go here
+            title={`Course: ${item.course.title}`}
             description={`Awarded: ${formatDate(
-              item.createdDate
-            )} Ends: ${formatDate(item.expiryDate)}`}
+              item.course.courseDate
+            )} Ends: ${formatDate(item.course.expiry)}`}
             left={(props) => <List.Icon {...props} icon="file-document" />}
             right={(props) => (
               <TouchableOpacity

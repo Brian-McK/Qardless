@@ -49,6 +49,9 @@ export default function CertificateFullInfo({ route, navigation }) {
   const [visible, setVisible] = useState(true);
   const { item } = route?.params || {};
 
+
+  console.log("CertificateFullInfo", JSON.stringify(item, null, 2));
+
   let displayMessage;
 
   const {
@@ -56,7 +59,9 @@ export default function CertificateFullInfo({ route, navigation }) {
     isLoading,
     isError,
     isSuccess,
-  } = useGetBusinessByIdQuery(item.businessId);
+  } = useGetBusinessByIdQuery(item.course.businessId);
+
+  console.log(business);
 
   let prevButtonNavigateTo = (
     <Button
@@ -94,9 +99,9 @@ export default function CertificateFullInfo({ route, navigation }) {
     <View style={styles.container}>
       <Card>
         <Card.Title
-          title={item.courseTitle}
+          title={item.course.title}
           titleVariant={"titleLarge"}
-          subtitle={`Serial Number: ${item.certNumber}`}
+          subtitle={`Certificate Number: ${item.certNumber}`}
           left={LeftContent}
         />
         <Card.Content>
@@ -104,18 +109,18 @@ export default function CertificateFullInfo({ route, navigation }) {
             <View style={styles.certInfo}>
               <View>
                 <Text variant="titleLarge">Issued By</Text>
-                {isSuccess && <Text variant="bodyLarge">{business.title}</Text>}
+                {isSuccess && <Text variant="bodyLarge">{business.name}</Text>}
                 {isLoading && <Text variant="bodyLarge">loading...</Text>}
               </View>
               <Divider style={styles.divider} bold={true} />
               <View>
                 <Text variant="titleLarge">Date Issued</Text>
-                <Text variant="bodyLarge">{formatDate(item.createdDate)}</Text>
+                <Text variant="bodyLarge">{formatDate(item.course.courseDate)}</Text>
               </View>
               <Divider style={styles.divider} bold={true} />
               <View>
                 <Text variant="titleLarge">Date Expires</Text>
-                <Text variant="bodyLarge">{formatDate(item.expiryDate)}</Text>
+                <Text variant="bodyLarge">{formatDate(item.course.expiry)}</Text>
               </View>
             </View>
             <View style={styles.certImgView}>
