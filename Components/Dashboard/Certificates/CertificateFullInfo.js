@@ -49,9 +49,6 @@ export default function CertificateFullInfo({ route, navigation }) {
   const [visible, setVisible] = useState(true);
   const { item } = route?.params || {};
 
-
-  console.log("CertificateFullInfo", JSON.stringify(item, null, 2));
-
   let displayMessage;
 
   const {
@@ -60,8 +57,6 @@ export default function CertificateFullInfo({ route, navigation }) {
     isError,
     isSuccess,
   } = useGetBusinessByIdQuery(item.course.businessId);
-
-  console.log(business);
 
   let prevButtonNavigateTo = (
     <Button

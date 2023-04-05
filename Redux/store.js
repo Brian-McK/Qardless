@@ -20,5 +20,5 @@ export default configureStore({
     })
       .concat(usersApiSlice.middleware)
       .concat(certificatesApiSlice.middleware)
-      .concat(businessesApiSlice.middleware),
+      .concat(businessesApiSlice.middleware)
 });
