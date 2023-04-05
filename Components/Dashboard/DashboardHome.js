@@ -12,8 +12,7 @@ export default function DashboardHome({ route, navigation }) {
   const [logoutRequested, setLogoutRequested] = useState(false);
 
   const { user } = route?.params || {}; 
-  
-  console.log("user", user);
+
 
   const logoutRequestCallback = (request) => {
     setLogoutRequested(request);
