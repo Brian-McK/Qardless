@@ -10,10 +10,13 @@ import store from "./Redux/store";
 import { Provider } from "react-redux";
 import DashboardHome from "./Components/Dashboard/DashboardHome";
 import "react-native-gesture-handler";
+import { usePreventScreenCapture } from "expo-screen-capture";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  usePreventScreenCapture();
+
   return (
     <Provider store={store}>
       <SafeAreaProvider>
