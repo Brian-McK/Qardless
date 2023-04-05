@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { usersApiSlice } from "./api/usersApiSlice";
 import { certificatesApiSlice } from "./api/certificatesApiSlice";
 import { businessesApiSlice } from "./api/businessesApiSlice";
+import { qrApiSlice } from "./api/qrApiSlice";
 import registerReducer from "./registerSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
@@ -11,6 +12,7 @@ export default configureStore({
     [usersApiSlice.reducerPath]: usersApiSlice.reducer,
     [certificatesApiSlice.reducerPath]: certificatesApiSlice.reducer,
     [businessesApiSlice.reducerPath]: businessesApiSlice.reducer,
+    [qrApiSlice.reducerPath]: qrApiSlice.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
@@ -20,5 +22,6 @@ export default configureStore({
     })
       .concat(usersApiSlice.middleware)
       .concat(certificatesApiSlice.middleware)
-      .concat(businessesApiSlice.middleware),
+      .concat(businessesApiSlice.middleware)
+      .concat(qrApiSlice.middleware),
 });
