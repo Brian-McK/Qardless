@@ -1,14 +1,9 @@
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ProgressBar, MD3Colors, Text, Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Step1 from "./Step1";
-import Step2 from "./Step2";
 import Step3 from "./Step3";
 import { useSelector } from "react-redux";
 
@@ -28,7 +23,7 @@ export default function Register({ navigation }) {
       <Button
         style={styles.button}
         mode="contained"
-        onPress={() => navigation.navigate("Step2")}
+        onPress={() => navigation.navigate("Step3")}
       >
         Next
       </Button>
@@ -36,16 +31,9 @@ export default function Register({ navigation }) {
     prevButtonNavigateTo = null;
   }
 
-  if (formStepNumber == 2) {
-    nextButtonNavigateTo = (
-      <Button
-        style={styles.button}
-        mode="contained"
-        onPress={() => navigation.navigate("Step3")}
-      >
-        Next
-      </Button>
-    );
+  if (formStepNumber == 3) {
+    nextButtonNavigateTo = null;
+
     prevButtonNavigateTo = (
       <Button
         style={styles.button}
@@ -57,25 +45,9 @@ export default function Register({ navigation }) {
     );
   }
 
-  if (formStepNumber == 3) {
-    nextButtonNavigateTo = null;
-
-    prevButtonNavigateTo = (
-      <Button
-        style={styles.button}
-        mode="contained"
-        onPress={() => navigation.navigate("Step2")}
-      >
-        Prev
-      </Button>
-    );
-  }
-
   const getProgressLevel = (formStepNum) => {
     if (formStepNum == 1) {
-      setProgressLevel(0.33);
-    } else if (formStepNum == 2) {
-      setProgressLevel(0.66);
+      setProgressLevel(0.5);
     } else {
       setProgressLevel(1);
     }
@@ -103,7 +75,6 @@ export default function Register({ navigation }) {
           }}
         >
           <Stack.Screen name="Step1" component={Step1} />
-          <Stack.Screen name="Step2" component={Step2} />
           <Stack.Screen name="Step3" component={Step3} />
         </Stack.Navigator>
 

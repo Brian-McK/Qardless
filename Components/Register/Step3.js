@@ -13,7 +13,6 @@ import { useRegisterUserMutation } from "../../Redux/api/usersApiSlice";
 import DisplayMessage from "../General/DisplayMessage";
 
 export default function Step3({ navigation }) {
-  const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(true);
@@ -31,7 +30,6 @@ export default function Step3({ navigation }) {
   const submitFormHandler = async () => {
     dispatch(
       getStep3FormData({
-        eircode,
         phone,
         password,
       })
@@ -102,13 +100,6 @@ export default function Step3({ navigation }) {
       accessible={false}
     >
       <View style={styles.container}>
-        <TextInput
-          style={styles.textInput}
-          mode="outlined"
-          label="Eircode"
-          value={eircode}
-          onChangeText={(eircode) => setEircode(eircode)}
-        />
         <TextInput
           style={styles.textInput}
           mode="outlined"
