@@ -1,5 +1,5 @@
-import { useFocusEffect } from "@react-navigation/native";
-import { useState, useCallback } from "react";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   View,
@@ -19,28 +19,22 @@ export default function Step3({ navigation }) {
   const [registerUser, { isLoading, isError, isSuccess }] =
     useRegisterUserMutation();
 
-  const { step1FormData, step3FormData } = useSelector(
-    (state) => state.register
-  );
+  const { step1FormData } = useSelector((state) => state.register);
 
   let displayMessage;
 
   const dispatch = useDispatch();
 
   const submitFormHandler = async () => {
-    dispatch(
-      getStep3FormData({
-        phone,
-        password,
-      })
-    );
+
+    Keyboard.dismiss();
 
     const userDetails = {
       name: `${step1FormData.firstName} ${step1FormData.surname}`,
       email: step1FormData.email,
       // email verfied and password hash need to be fixed - TODO
-      password: step3FormData.password,
-      contactNumber: step3FormData.phone,
+      password: password,
+      contactNumber: phone,
     };
 
     setVisible(true);

@@ -1,6 +1,6 @@
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { useState, useEffect, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Keyboard } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { currentStep, getStep1FormData } from "../../Redux/registerSlice";
@@ -14,7 +14,6 @@ export default function Step1() {
 
   const isFocused = useIsFocused();
 
-      // capture the data when changing focus on stack - TODO - Create custom hook
   useEffect(() => {
     if (!isFocused) {
       dispatch(
