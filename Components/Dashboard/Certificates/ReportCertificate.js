@@ -21,12 +21,16 @@ export default function ReportCertificate({ route, navigation }) {
 
   let displayMessage;
 
+  console.log(JSON.stringify(item, null, 2));
+
   const submitFormHandler = async () => {
     if (!issue || issue == null) {
       return;
     }
+
     const issuePayload = {
-      type: "Certificate_Issue",
+      certificateId: item.id,
+      type: "Certificate",
       content: `EndUser: ${item.endUserId}, Certificate: ${item.certNumber}, Issue: ${issue}`,
     };
 
@@ -42,7 +46,7 @@ export default function ReportCertificate({ route, navigation }) {
       name: "CertificateView",
       params: item,
       merge: true,
-    })
+    });
   };
 
   let prevButtonNavigateTo = (
@@ -90,12 +94,11 @@ export default function ReportCertificate({ route, navigation }) {
             onPress: () => setVisible(false),
           },
         ]}
-        message={"Report submitted, thank you!"}
-        materialCommunityIconName={"check-circle"}
+        message={"Error reporting issue, please try again!"}
+        materialCommunityIconName={"alert-circle"}
       />
     );
   }
-
 
   return (
     <TouchableWithoutFeedback
