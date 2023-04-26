@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const certificatesApiSlice = createApi({
   reducerPath: "certificatesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://3bec-80-233-50-251.ngrok-free.app/",
+    baseUrl: "https://d2a5-80-233-50-251.ngrok-free.app/",
   }),
   tagTypes: ["Certificates"],
   endpoints: (builder) => ({

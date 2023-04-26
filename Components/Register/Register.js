@@ -1,4 +1,9 @@
-import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+  View,
+} from "react-native";
 import { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ProgressBar, MD3Colors, Text, Button } from "react-native-paper";
@@ -6,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Step1 from "./Step1";
 import Step3 from "./Step3";
 import { useSelector } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,32 +65,35 @@ export default function Register({ navigation }) {
   }, [formStepNumber]);
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => Keyboard.dismiss()}
-      accessible={false}
-    >
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.displayHeading} variant="headlineMedium">
-          Register
-        </Text>
 
-        <Stack.Navigator
-          initialRouteName={Step1}
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Step1" component={Step1} />
-          <Stack.Screen name="Step3" component={Step3} />
-        </Stack.Navigator>
+      <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss()}
+        accessible={false}
+      >
+        <View style={styles.inner}>
+          <Text style={styles.displayHeading} variant="headlineMedium">
+            Register
+          </Text>
 
-        {nextButtonNavigateTo}
+          <Stack.Navigator
+            initialRouteName={Step1}
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="Step1" component={Step1} />
+            <Stack.Screen name="Step3" component={Step3} />
+          </Stack.Navigator>
 
-        {prevButtonNavigateTo}
+          <View style={styles.btnContainer}>
+            {nextButtonNavigateTo}
 
-        <ProgressBar progress={progressLevel} color={MD3Colors.error50} />
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+            {prevButtonNavigateTo}
+
+            <ProgressBar progress={progressLevel} style={{height: 10, borderRadius: 20}} color={MD3Colors.primary50} />
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
   );
 }
 
@@ -93,10 +102,9 @@ const defaultMargin = 20;
 const defaultPadding = 20;
 
 const styles = StyleSheet.create({
-  container: {
+  inner: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: defaultPadding,
   },
   displayHeading: {
     textAlign: "center",
@@ -106,5 +114,9 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: defaultMargin,
+  },
+  btnContainer: {
+    marginTop: 12,
+    padding: defaultPadding
   },
 });

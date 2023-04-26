@@ -1,16 +1,12 @@
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, View, Keyboard } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { currentStep, getStep3FormData } from "../../Redux/registerSlice";
 import { useRegisterUserMutation } from "../../Redux/api/usersApiSlice";
 import DisplayMessage from "../General/DisplayMessage";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Step3({ navigation }) {
   const [phone, setPhone] = useState();
@@ -26,7 +22,6 @@ export default function Step3({ navigation }) {
   const dispatch = useDispatch();
 
   const submitFormHandler = async () => {
-
     Keyboard.dismiss();
 
     const userDetails = {
@@ -89,11 +84,10 @@ export default function Step3({ navigation }) {
   );
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => Keyboard.dismiss()}
-      accessible={false}
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: "#fff", padding: defaultPadding * 2 }}
     >
-      <View style={styles.container}>
+      <View>
         <TextInput
           style={styles.textInput}
           mode="outlined"
@@ -121,7 +115,7 @@ export default function Step3({ navigation }) {
 
         {displayMessage}
       </View>
-    </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -130,7 +124,7 @@ const defaultMargin = 20;
 const defaultPadding = 20;
 
 const styles = StyleSheet.create({
-  container: {
+  inner: {
     flex: 1,
     backgroundColor: "#fff",
     padding: defaultPadding,
