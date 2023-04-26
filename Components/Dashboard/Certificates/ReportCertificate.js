@@ -21,8 +21,6 @@ export default function ReportCertificate({ route, navigation }) {
 
   let displayMessage;
 
-  console.log(JSON.stringify(item, null, 2));
-
   const submitFormHandler = async () => {
     if (!issue || issue == null) {
       return;

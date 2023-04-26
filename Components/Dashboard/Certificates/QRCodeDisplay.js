@@ -3,8 +3,7 @@ import { View, StyleSheet, Image } from "react-native";
 import { MD3Colors, Text, Surface } from "react-native-paper";
 import QRCertOptions from "./QRCertOptions";
 import { QR_API } from "react-native-dotenv";
-
-// TODO - https://dev.to/one/react-native-prevent-screen-capture-on-selected-screens-19f6#:~:text=Here%20are%20the%20steps%20to%20prevent%20screen%20capture%20on%20selected%20screens.&text=import%20%7B%20useIsFocused%20%7D%20from%20'%40react,variable%20on%20the%20selected%20screen.
+import QRCode from "react-native-qrcode-svg";
 
 export default function QRCodeDisplay(props) {
   const { item } = props;
@@ -35,7 +34,17 @@ export default function QRCodeDisplay(props) {
           {item.course.title}
         </Text>
 
-        <View>{item && loadQrCode()}</View>
+        {/* QR Code API not hosted and cant use ngrok to run 2 api's at once as we only have free account. View below will generate */}
+        {/* <View>{item && loadQrCode()}</View> */}
+
+        <View>
+          <QRCode
+            value={item.pdfUrl}
+            size={250}
+            color="black"
+            backgroundColor="white"
+          />
+        </View>
 
         <QRCertOptions navigation={props.navigation} item={item} />
         <Text variant="titleSmall" style={styles.title}>
