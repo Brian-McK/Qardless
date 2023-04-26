@@ -7,13 +7,7 @@ const initialState = {
     surname: null,
     email: null,
   },
-  step2FormData: {
-    address1: null,
-    address2: null,
-    county: null,
-  },
   step3FormData: {
-    eircode: null,
     phone: null,
     password: null,
   },
@@ -40,12 +34,6 @@ export const counterSlice = createSlice({
     resetStep1FormData: (state, action) => {
       return initialState;
     },
-    getStep2FormData: (state, action) => {
-      state.step2FormData = action.payload;
-    },
-    resetStep2FormData: (state, action) => {
-      return initialState;
-    },
     getStep3FormData: (state, action) => {
       state.step3FormData = action.payload;
     },
@@ -62,8 +50,6 @@ export const {
   resetCurrentStep,
   getStep1FormData,
   resetStep1FormData,
-  getStep2FormData,
-  resetStep2FormData,
   getStep3FormData,
   resetStep3FormData,
   isLoading,

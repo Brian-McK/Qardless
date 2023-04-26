@@ -8,6 +8,7 @@ import {
 import { Button, Text, TextInput } from "react-native-paper";
 import { useReportCertificateIssueMutation } from "../../../Redux/api/certificatesApiSlice";
 import DisplayMessage from "../../General/DisplayMessage";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function ReportCertificate({ route, navigation }) {
   const { item } = route?.params || {};
@@ -25,8 +26,10 @@ export default function ReportCertificate({ route, navigation }) {
     if (!issue || issue == null) {
       return;
     }
+
     const issuePayload = {
-      type: "Certificate_Issue",
+      certificateId: item.id,
+      type: "Certificate",
       content: `EndUser: ${item.endUserId}, Certificate: ${item.certNumber}, Issue: ${issue}`,
     };
 
@@ -42,7 +45,7 @@ export default function ReportCertificate({ route, navigation }) {
       name: "CertificateView",
       params: item,
       merge: true,
-    })
+    });
   };
 
   let prevButtonNavigateTo = (
@@ -90,50 +93,57 @@ export default function ReportCertificate({ route, navigation }) {
             onPress: () => setVisible(false),
           },
         ]}
-        message={"Report submitted, thank you!"}
-        materialCommunityIconName={"check-circle"}
+        message={"Error reporting issue, please try again!"}
+        materialCommunityIconName={"alert-circle"}
       />
     );
   }
 
-
   return (
-    <TouchableWithoutFeedback
-      onPress={() => Keyboard.dismiss()}
-      accessible={false}
-    >
-      <View style={styles.container}>
-        <Text style={styles.displayHeading} variant="headlineMedium">
-          Report Certificate Issue
-        </Text>
-        {!isSuccess && (
-          <TextInput
-            style={styles.inputField}
-            multiline={true}
-            numberOfLines={10}
-            mode="outlined"
-            label={`Enter issue for certificate ${item.certNumber}`}
-            value={issue}
-            onChangeText={(issue) => setIssue(issue)}
-          />
-        )}
+    <KeyboardAwareScrollView style={{ backgroundColor: "#fff" }}>
+      <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss()}
+        accessible={false}
+      >
+        <View style={styles.inner}>
+          <Text style={styles.displayHeading} variant="headlineMedium">
+            Report Certificate Issue
+          </Text>
 
-        {displayMessage}
-        {!isSuccess && (
-          <Button
-            style={styles.button}
-            loading={isLoading}
-            disabled={isSuccess || !issue}
-            mode="contained"
-            onPress={() => submitFormHandler()}
-          >
-            Submit Report
-          </Button>
-        )}
+          {!isSuccess && (
+            <View>
+              <TextInput
+                style={styles.inputField}
+                multiline={true}
+                numberOfLines={10}
+                mode="outlined"
+                label={`Enter issue for certificate ${item.certNumber}`}
+                value={issue}
+                onChangeText={(issue) => setIssue(issue)}
+              />
+            </View>
+          )}
 
-        {!isSuccess && prevButtonNavigateTo}
-      </View>
-    </TouchableWithoutFeedback>
+          <View style={styles.btnContainer}>
+            {!isSuccess && (
+              <Button
+                style={styles.button}
+                loading={isLoading}
+                disabled={isSuccess || !issue}
+                mode="contained"
+                onPress={() => submitFormHandler()}
+              >
+                Submit Report
+              </Button>
+            )}
+
+            {!isSuccess && prevButtonNavigateTo}
+          </View>
+
+          {displayMessage}
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -142,8 +152,9 @@ const defaultMargin = 20;
 const defaultPadding = 20;
 
 const styles = StyleSheet.create({
-  container: {
+  inner: {
     flex: 1,
+    justifyContent: "flex-start",
     backgroundColor: "#fff",
     padding: defaultPadding,
   },
@@ -161,6 +172,9 @@ const styles = StyleSheet.create({
   },
   inputField: {
     margin: defaultMargin,
+  },
+  btnContainer: {
+    marginTop: 12,
   },
   button: {
     margin: defaultMargin - 5,

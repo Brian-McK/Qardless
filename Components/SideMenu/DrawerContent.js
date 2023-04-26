@@ -30,7 +30,6 @@ export default function DrawerContent({
 
   const navItems = [
     { name: "Certificates", iconName: "file-document" },
-    { name: "QR Scanner", iconName: "barcode" },
   ];
 
   const drawerItems = navItems.map((item, index) => {
@@ -79,7 +78,9 @@ export default function DrawerContent({
         <Drawer.Section style={styles.drawerSection}>
           {drawerItems}
         </Drawer.Section>
-        <Drawer.Section>
+
+        {/* future feature - dark mode */}
+        {/* <Drawer.Section>
           <View>
             <DrawerItem
               icon={({ color, size }) => (
@@ -96,7 +97,9 @@ export default function DrawerContent({
           <View style={styles.switch}>
             <Switch value={false} />
           </View>
-        </Drawer.Section>
+        </Drawer.Section> */}
+        {/* future feature - dark mode */}
+
         <Drawer.Section style={styles.logoutSection}>
           <DrawerItem
             icon={({ color, size }) => (

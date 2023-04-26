@@ -1,48 +1,35 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { useState, useCallback } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import React, { useState, useCallback } from "react";
+import { StyleSheet, View, Keyboard } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { currentStep, getStep3FormData } from "../../Redux/registerSlice";
 import { useRegisterUserMutation } from "../../Redux/api/usersApiSlice";
 import DisplayMessage from "../General/DisplayMessage";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Step3({ navigation }) {
-  const [eircode, setEircode] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const [visible, setVisible] = useState(true);
   const [registerUser, { isLoading, isError, isSuccess }] =
     useRegisterUserMutation();
 
-  const { step1FormData, step3FormData } = useSelector(
-    (state) => state.register
-  );
+  const { step1FormData } = useSelector((state) => state.register);
 
   let displayMessage;
 
   const dispatch = useDispatch();
 
   const submitFormHandler = async () => {
-    dispatch(
-      getStep3FormData({
-        eircode,
-        phone,
-        password,
-      })
-    );
+    Keyboard.dismiss();
 
     const userDetails = {
       name: `${step1FormData.firstName} ${step1FormData.surname}`,
       email: step1FormData.email,
       // email verfied and password hash need to be fixed - TODO
-      password: step3FormData.password,
-      contactNumber: step3FormData.phone,
+      password: password,
+      contactNumber: phone,
     };
 
     setVisible(true);
@@ -97,18 +84,10 @@ export default function Step3({ navigation }) {
   );
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => Keyboard.dismiss()}
-      accessible={false}
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: "#fff", padding: defaultPadding * 2 }}
     >
-      <View style={styles.container}>
-        <TextInput
-          style={styles.textInput}
-          mode="outlined"
-          label="Eircode"
-          value={eircode}
-          onChangeText={(eircode) => setEircode(eircode)}
-        />
+      <View>
         <TextInput
           style={styles.textInput}
           mode="outlined"
@@ -136,7 +115,7 @@ export default function Step3({ navigation }) {
 
         {displayMessage}
       </View>
-    </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -145,7 +124,7 @@ const defaultMargin = 20;
 const defaultPadding = 20;
 
 const styles = StyleSheet.create({
-  container: {
+  inner: {
     flex: 1,
     backgroundColor: "#fff",
     padding: defaultPadding,
