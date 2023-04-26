@@ -4,8 +4,6 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { useReportCertificateIssueMutation } from "../../../Redux/api/certificatesApiSlice";
@@ -154,11 +152,6 @@ const defaultMargin = 20;
 const defaultPadding = 20;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: defaultPadding,
-  },
   inner: {
     flex: 1,
     justifyContent: "flex-start",

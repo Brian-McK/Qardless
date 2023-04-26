@@ -1,4 +1,9 @@
-import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+  View,
+} from "react-native";
 import { useState, useEffect } from "react";
 import {
   MD2Colors,
@@ -10,6 +15,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLoginUserMutation } from "../../Redux/api/usersApiSlice";
 import DisplayMessage from "../General/DisplayMessage";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState();
@@ -20,7 +26,6 @@ export default function Login({ navigation }) {
 
   let displayMessage;
 
-  // reset to initial state
   const resetState = () => {
     setEmail("");
     setPassword("");
@@ -29,7 +34,6 @@ export default function Login({ navigation }) {
   const loginHandler = async () => {
     const userLoginDetails = {
       email: email,
-      // email verfied and password hash need to be fixed - TODO
       password: password,
     };
 
@@ -64,48 +68,54 @@ export default function Login({ navigation }) {
   }
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => Keyboard.dismiss()}
-      accessible={false}
-    >
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.displayHeading} variant="headlineMedium">
-          Login
-        </Text>
-        <TextInput
-          style={styles.inputField}
-          mode="outlined"
-          label="Email"
-          value={email}
-          onChangeText={(email) => setEmail(email)}
-        />
-        <TextInput
-          style={styles.inputField}
-          mode="outlined"
-          label="Password"
-          value={password}
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-        <Button
-          style={styles.button}
-          disabled={isLoading}
-          mode="contained"
-          onPress={loginHandler}
-        >
-          Login
-        </Button>
-        {isLoading && (
-          <ActivityIndicator
-            style={styles.spinner}
-            size={"large"}
-            animating={true}
-            color={MD2Colors.deepPurple900}
+    <KeyboardAwareScrollView style={{ backgroundColor: "#fff" }}>
+      <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss()}
+        accessible={false}
+      >
+        <View style={styles.inner}>
+          <Text style={styles.displayHeading} variant="headlineMedium">
+            Login
+          </Text>
+          <TextInput
+            style={styles.inputField}
+            mode="outlined"
+            label="Email"
+            value={email}
+            onChangeText={(email) => setEmail(email)}
           />
-        )}
-        {displayMessage}
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+          <TextInput
+            style={styles.inputField}
+            mode="outlined"
+            label="Password"
+            value={password}
+            secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)}
+          />
+
+          <View style={styles.btnContainer}>
+            <Button
+              style={styles.button}
+              disabled={isLoading}
+              mode="contained"
+              onPress={loginHandler}
+            >
+              Login
+            </Button>
+          </View>
+
+          {isLoading && (
+            <ActivityIndicator
+              style={styles.spinner}
+              size={"large"}
+              animating={true}
+              color={MD2Colors.deepPurple900}
+            />
+          )}
+          {displayMessage}
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -114,8 +124,9 @@ const defaultMargin = 20;
 const defaultPadding = 40;
 
 const styles = StyleSheet.create({
-  container: {
+  inner: {
     flex: 1,
+    justifyContent: "flex-start",
     backgroundColor: "#fff",
     padding: defaultPadding,
   },
@@ -128,6 +139,9 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: defaultMargin,
+  },
+  btnContainer: {
+    marginTop: 12,
   },
   spinner: {
     margin: defaultMargin,
